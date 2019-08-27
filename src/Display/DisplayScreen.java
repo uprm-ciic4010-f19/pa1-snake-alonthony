@@ -6,9 +6,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import com.sun.scenario.effect.ColorAdjust;
+//import com.sun.scenario.effect.ColorAdjust;
 
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
+//import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 
 /**
  * Created by AlexVR on 7/1/2018.

@@ -7,7 +7,7 @@ import Main.Handler;
 
 import java.awt.*;
 import java.util.LinkedList;
-
+import java.awt.Color;
 
 /**
  * Created by AlexVR on 7/2/2018.
@@ -55,7 +55,7 @@ public abstract class WorldBase {
 
         for (int i = 0; i <= 800; i = i + GridPixelsize) {
 
-            g.setColor(Color.white);
+            g.setColor(new Color(0, 0, 0, 0));
             g.drawLine(0, i, handler.getWidth() , i);
             g.drawLine(i,0,i,handler.getHeight());
 
