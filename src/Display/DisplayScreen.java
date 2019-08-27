@@ -6,6 +6,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import com.sun.scenario.effect.ColorAdjust;
+
+import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
+
 /**
  * Created by AlexVR on 7/1/2018.
  */
@@ -47,7 +51,7 @@ public class DisplayScreen {
         canvas.setMaximumSize(new Dimension(width, height));
         canvas.setMinimumSize(new Dimension(width, height));
         canvas.setFocusable(false);
-        canvas.setBackground(Color.black);
+        canvas.setBackground(new Color(128, 0, 128));
 
         frame.add(canvas);
         frame.pack();
