@@ -1,6 +1,7 @@
 package Game.Entities.Dynamic;
 
 import Main.Handler;
+import sun.security.util.Length;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -21,6 +22,7 @@ public class Player {
     public int moveCounter;
 
     public String direction;//is your first name one?
+	private int length;
 
     public Player(Handler handler){
         this.handler = handler;
@@ -47,6 +49,10 @@ public class Player {
             direction="Left";
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)){
             direction="Right";
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) {
+        	length++;
+        	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
+        	
         }
 
     }
@@ -207,7 +213,7 @@ public class Player {
                             tail=(new Tail(this.xCoord-1,this.yCoord,handler));
                         }else{
                             tail=(new Tail(this.xCoord+1,this.yCoord,handler));
-                        } System.out.println("Tu biscochito");
+                        } 
                     }
                 }else{
                     if(handler.getWorld().body.getLast().y!=0){
