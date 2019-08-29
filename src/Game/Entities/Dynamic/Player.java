@@ -10,7 +10,8 @@ import java.util.Random;
  */
 public class Player {
 
-    public int lenght;
+    
+	public int length;
     public boolean justAte;
     private Handler handler;
 
@@ -20,6 +21,7 @@ public class Player {
     public int moveCounter;
 
     public String direction;//is your first name one?
+	private double currScore;
 
     public Player(Handler handler){
         this.handler = handler;
@@ -28,8 +30,8 @@ public class Player {
         moveCounter = 0;
         direction= "Right";
         justAte = false;
-        lenght= 1;
-
+        length= 1;
+        currScore = 0;
     }
 
     public void tick(){
@@ -51,6 +53,8 @@ public class Player {
         }
 
     }
+    
+    
 
     public void checkCollisionAndMove(){
         handler.getWorld().playerLocation[xCoord][yCoord]=false;
@@ -88,21 +92,27 @@ public class Player {
         }
         handler.getWorld().playerLocation[xCoord][yCoord]=true;
 
-
+        
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
             Eat();
-        }
-
+            currScore = Math.sqrt(2*currScore+1);
+        	System.out.println(currScore);
+			}
+                     
+        
         if(!handler.getWorld().body.isEmpty()) {
             handler.getWorld().playerLocation[handler.getWorld().body.getLast().x][handler.getWorld().body.getLast().y] = false;
             handler.getWorld().body.removeLast();
             handler.getWorld().body.addFirst(new Tail(x, y,handler));
+            
         }
-
+       
     }
 
+    
+    
     public void render(Graphics g,Boolean[][] playeLocation){
-        Random r = new Random();
+        new Random();
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
                 g.setColor(Color.GREEN); // (ANTHONY) cambie el color de .WHITE a .GREEN
@@ -121,7 +131,7 @@ public class Player {
     }
 
     public void Eat(){
-        lenght++;
+        length++;
         Tail tail= null;
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
         handler.getWorld().appleOnBoard=false;
@@ -229,7 +239,7 @@ public class Player {
     }
 
     public void kill(){
-        lenght = 0;
+        length = 0;
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
 
