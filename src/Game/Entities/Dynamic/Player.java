@@ -19,7 +19,7 @@ public class Player {
     public int yCoord;
 
     public int moveCounter;
-
+    
     public String direction;//is your first name one?
 	private double currScore;
 
@@ -38,9 +38,9 @@ public class Player {
         moveCounter++;
         if(moveCounter>=5) {
             checkCollisionAndMove();
-            moveCounter=3; // (ANTHONY) cambiado de 0 a 3 para aumentar la velocidad
+            moveCounter=3; // (ANTHONY) cambiado de 0 a 2 para aumentar la velocidad
         }
-        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
+        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){ //HINT: implement if im going down, don't go up, and so on...
             direction="Up";
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN)){
             direction="Down";
@@ -50,8 +50,24 @@ public class Player {
             direction="Right";
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) {
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
+        	// (ANTHONY) - En el siguiente codigo implemento los comandos de "+" y "-"
+        	// para aumentar o disminuir la velocidad de la serpiente
+        	// hint: If you use code like: if(handler.getKeyManager().Up ,, la serpiente se sigue 
+        	// moviendo continuamente sin parar, se usa KeyJustPressed para evitar eso.
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
+        	moveCounter++;
+        	if(moveCounter>=5) {
+        		checkCollisionAndMove();
+        		moveCounter = moveCounter++;
         }
-
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
+        	moveCounter--;
+        	if(moveCounter>=5) {
+        		checkCollisionAndMove();
+            	moveCounter = moveCounter--;
+   
+        	}
+        }
     }
     
     
@@ -69,8 +85,8 @@ public class Player {
                 }
                 break;
             case "Right":
-                if(xCoord==handler.getWorld().GridWidthHeightPixelCount-1){
-                    kill();
+                if(xCoord==handler.getWorld().GridWidthHeightPixelCount-1){ //check if you are on the limit, same 
+                    kill();													// for up down and left
                 }else{
                     xCoord++;
                 }
@@ -104,7 +120,9 @@ public class Player {
             handler.getWorld().playerLocation[handler.getWorld().body.getLast().x][handler.getWorld().body.getLast().y] = false;
             handler.getWorld().body.removeLast();
             handler.getWorld().body.addFirst(new Tail(x, y,handler));
-            
+            // basicamente, coge la ultima parte del snake (tail) y la mueve al "cuello" (1 antes del head) cuando
+            //  se mueve, simulando o dando la ilusion de que el snake se esta "moviedo"
+            // El "cuello" es donde la cabeza de la serpiente solia estar
         }
        
     }
@@ -118,8 +136,8 @@ public class Player {
                 g.setColor(Color.GREEN); // (ANTHONY) cambie el color de .WHITE a .GREEN
 
                 if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){
-                    g.fillRect((i*handler.getWorld().GridPixelsize),
-                            (j*handler.getWorld().GridPixelsize),
+                    g.fillRect((i*handler.getWorld().GridPixelsize), // si quieres imagen de manzana
+                            (j*handler.getWorld().GridPixelsize),    // pones "g.drawimage" y llamas la img
                             handler.getWorld().GridPixelsize,
                             handler.getWorld().GridPixelsize);
                 }
