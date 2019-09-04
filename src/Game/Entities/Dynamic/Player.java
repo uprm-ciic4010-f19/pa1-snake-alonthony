@@ -5,6 +5,10 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
+import com.sun.corba.se.spi.orbutil.fsm.State;
+
+
+
 /**
  * Created by AlexVR on 7/2/2018.
  */
@@ -18,10 +22,10 @@ public class Player {
     public int xCoord;
     public int yCoord;
 
-    public int moveCounter;
+    public int moveCounter; 
 
     public String direction;//is your first name one?
-	private double currScore;
+	private double currScore; 
 
     public Player(Handler handler){
         this.handler = handler;
@@ -39,8 +43,8 @@ public class Player {
         if(moveCounter>=5) {
             checkCollisionAndMove();
             moveCounter=3; // (ANTHONY) cambiado de 0 a 3 para aumentar la velocidad
-        }
-        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
+        	
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
             direction="Up";
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN)){
             direction="Down";
@@ -48,8 +52,10 @@ public class Player {
             direction="Left";
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)){
             direction="Right";
-        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) {
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te añade un segmento de la cola (Alondra)
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
+        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
+        	
         }
 
     }
@@ -95,7 +101,7 @@ public class Player {
         
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
             Eat();
-            currScore = Math.sqrt(2*currScore+1);
+            currScore = Math.sqrt(2*currScore+1);//cuando coma la manzana enseñe el score (Alondra)
         	System.out.println(currScore);
 			}
                      
@@ -105,6 +111,13 @@ public class Player {
             handler.getWorld().body.removeLast();
             handler.getWorld().body.addFirst(new Tail(x, y,handler));
             
+            for (int i = 0; i < handler.getWorld().body.size() ; i++) { //manda el mensaje "Game Over" cuando se choca con el mismo
+    			if (xCoord==handler.getWorld().body.get(i).x && yCoord==handler.getWorld().body.get(i).y){
+    				if (i != handler.getWorld().body.size() -1) {
+    					System.out.println("Game Over");
+    				}
+    			}
+    		}
         }
        
     }
@@ -242,12 +255,21 @@ public class Player {
         length = 0;
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
-
                 handler.getWorld().playerLocation[i][j]=false;
-
+               
             }
         }
-    }
+       
+		//for (int i = 0; i < handler.getWorld().body. ; i++) {
+			//if (xCoord==handler.getWorld().GridWidthHeightPixelCount && yCoord==handler.getWorld().GridWidthHeightPixelCount){
+				//if (i != handler.getWorld().body -1) {
+					//System.out.println("Game Over");
+				//}
+			//}
+				
+		//}
+	}
+    
 
     public boolean isJustAte() {
         return justAte;
