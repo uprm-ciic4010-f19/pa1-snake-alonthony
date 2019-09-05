@@ -49,7 +49,7 @@ public class Player {
         moveCounter++;
         if(moveCounter>=5) {
             checkCollisionAndMove();
-            moveCounter=3; // (ANTHONY) cambiado de 0 a 3 para aumentar la velocidad
+            moveCounter=4; // (Anthony) cambiado de 0 a 3 para aumentar la velocidad
         	
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
             direction="Up";
@@ -59,11 +59,11 @@ public class Player {
             direction="Left";
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)){
             direction="Right";
-        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te añade un segmento de la cola (Alondra)
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te aade un segmento de la cola (Alondra)
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego (Alondra)
         	Game.GameStates.State.setState(handler.getGame().pauseState);
-        	// (ANTHONY) - En el siguiente codigo implemento los comandos de "+" y "-"
+        	// (Anthony) - En el siguiente codigo implemento los comandos de "+" y "-"
         	// para aumentar o disminuir la velocidad de la serpiente
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
         	moveCounter++;
@@ -120,7 +120,7 @@ public class Player {
         
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
         	Eat();
-        	currScore = Math.sqrt(2*currScore+1);//cuando coma la manzana enseñe el score (Alondra)
+        	currScore = Math.sqrt(2*currScore+1);//cuando coma la manzana enseï¿½e el score (Alondra)
         	currScore++;
 			}
                      
@@ -154,7 +154,7 @@ public class Player {
             	g.setColor(Color.WHITE); //color del texto (Alondra)
             	g.drawString("Score: "+currScore,20, 20); //proyecta el score en el juego (Alondra)
             	
-            	g.setColor(Color.GREEN); // (ANTHONY) cambie el color del snake de .WHITE a .GREEN
+            	g.setColor(Color.GREEN); // (Anthony) cambie el color del snake de .WHITE a .GREEN
             	
                 if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){
                     g.fillRect((i*handler.getWorld().GridPixelsize),
