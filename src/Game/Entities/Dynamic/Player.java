@@ -151,10 +151,10 @@ public class Player {
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
             	
-            	g.setColor(Color.WHITE);
-            	g.drawString("Score: "+currScore,20, 20);
+            	g.setColor(Color.WHITE); //color del texto (Alondra)
+            	g.drawString("Score: "+currScore,20, 20); //proyecta el score en el juego (Alondra)
             	
-            	g.setColor(Color.GREEN); // (ANTHONY) cambie el color de .WHITE a .GREEN
+            	g.setColor(Color.GREEN); // (ANTHONY) cambie el color del snake de .WHITE a .GREEN
             	
                 if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){
                     g.fillRect((i*handler.getWorld().GridPixelsize),
