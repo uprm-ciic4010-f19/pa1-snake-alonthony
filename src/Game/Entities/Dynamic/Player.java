@@ -58,13 +58,24 @@ public class Player {
             direction="Right";
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te añade un segmento de la cola (Alondra)
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
-        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pause el juego
+        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego
         	Game.GameStates.State.setState(handler.getGame().pauseState);
+        	// (ANTHONY) - En el siguiente codigo implemento los comandos de "+" y "-"
+        	// para aumentar o disminuir la velocidad de la serpiente
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
+        	moveCounter++;
+        	if(moveCounter>=5) {
+        		checkCollisionAndMove();
+        		moveCounter = moveCounter++;
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
+        	moveCounter--;
+        	if(moveCounter>=5) {
+        		checkCollisionAndMove();
+            	moveCounter = moveCounter--;
+        }
         	}
-
+        }
     }
-    
-    
 
     public void checkCollisionAndMove(){
         handler.getWorld().playerLocation[xCoord][yCoord]=false;
