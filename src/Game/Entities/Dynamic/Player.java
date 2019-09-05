@@ -28,10 +28,10 @@ public class Player {
 
     public String direction;//is your first name one?
 	private double currScore; 
+	public Graphics g;
 	
 	
-	
-    public Player(Handler handler){
+	public Player(Handler handler){
         this.handler = handler;
         xCoord = 0;
         yCoord = 0;
@@ -40,9 +40,12 @@ public class Player {
         justAte = false;
         length= 1;
         currScore = 0;
+        
     }
 
-    public void tick(){
+   
+
+	public void tick(){
         moveCounter++;
         if(moveCounter>=5) {
             checkCollisionAndMove();
@@ -58,7 +61,7 @@ public class Player {
             direction="Right";
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te añade un segmento de la cola (Alondra)
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
-        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego
+        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego (Alondra)
         	Game.GameStates.State.setState(handler.getGame().pauseState);
         	// (ANTHONY) - En el siguiente codigo implemento los comandos de "+" y "-"
         	// para aumentar o disminuir la velocidad de la serpiente
@@ -116,9 +119,9 @@ public class Player {
 
         
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
-            Eat();
-            currScore = Math.sqrt(2*currScore+1);//cuando coma la manzana enseñe el score (Alondra)
-        	System.out.println(currScore);
+        	Eat();
+        	currScore = Math.sqrt(2*currScore+1);//cuando coma la manzana enseñe el score (Alondra)
+        	currScore++;
 			}
                      
         
@@ -147,8 +150,12 @@ public class Player {
         new Random();
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
-                g.setColor(Color.GREEN); // (ANTHONY) cambie el color de .WHITE a .GREEN
-
+            	
+            	g.setColor(Color.WHITE);
+            	g.drawString("Score: "+currScore,20, 20);
+            	
+            	g.setColor(Color.GREEN); // (ANTHONY) cambie el color de .WHITE a .GREEN
+            	
                 if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){
                     g.fillRect((i*handler.getWorld().GridPixelsize),
                             (j*handler.getWorld().GridPixelsize),
@@ -167,6 +174,9 @@ public class Player {
         Tail tail= null;
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
         handler.getWorld().appleOnBoard=false;
+        
+    	
+    	
         switch (direction){
             case "Left":
                 if( handler.getWorld().body.isEmpty()){
