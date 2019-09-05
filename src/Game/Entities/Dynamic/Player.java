@@ -7,6 +7,8 @@ import java.util.Random;
 
 //import com.sun.corba.se.spi.orbutil.fsm.State;
 
+import Game.GameStates.PauseState;
+import Game.Entities.Static.*;
 
 
 /**
@@ -26,7 +28,9 @@ public class Player {
 
     public String direction;//is your first name one?
 	private double currScore; 
-
+	
+	
+	
     public Player(Handler handler){
         this.handler = handler;
         xCoord = 0;
@@ -54,9 +58,9 @@ public class Player {
             direction="Right";
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te añade un segmento de la cola (Alondra)
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
-        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
-        	
-        }
+        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pause el juego
+        	Game.GameStates.State.setState(handler.getGame().pauseState);
+        	}
 
     }
     
@@ -263,14 +267,6 @@ public class Player {
             }
         }
        
-		//for (int i = 0; i < handler.getWorld().body. ; i++) {
-			//if (xCoord==handler.getWorld().GridWidthHeightPixelCount && yCoord==handler.getWorld().GridWidthHeightPixelCount){
-				//if (i != handler.getWorld().body -1) {
-					//System.out.println("Game Over");
-				//}
-			//}
-				
-		//}
 	}
     
 
