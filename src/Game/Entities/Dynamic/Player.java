@@ -110,7 +110,10 @@ public class Player {
             handler.getWorld().playerLocation[handler.getWorld().body.getLast().x][handler.getWorld().body.getLast().y] = false;
             handler.getWorld().body.removeLast();
             handler.getWorld().body.addFirst(new Tail(x, y,handler));
-            
+            // basicamente, coge la ultima parte del snake (tail) y la mueve al "cuello" (1 antes del head) cuando
+            //  se mueve, simulando o dando la ilusion de que el snake se esta "moviedo"
+            // El "cuello" es donde la cabeza de la serpiente solia estar
+   
             for (int i = 0; i < handler.getWorld().body.size() ; i++) { //manda el mensaje "Game Over" cuando se choca con el mismo
     			if (xCoord==handler.getWorld().body.get(i).x && yCoord==handler.getWorld().body.get(i).y){
     				if (i != handler.getWorld().body.size() -1) {

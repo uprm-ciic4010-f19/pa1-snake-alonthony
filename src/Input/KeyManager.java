@@ -40,9 +40,7 @@ public class KeyManager implements KeyListener {
 		up = keys[KeyEvent.VK_W];
 		down = keys[KeyEvent.VK_S];
 		left = keys[KeyEvent.VK_A];
-		right = keys[KeyEvent.VK_D];
-		
-		
+        right = keys[KeyEvent.VK_D];
 		pbutt = keys[KeyEvent.VK_ESCAPE];
 
 	}
