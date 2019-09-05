@@ -67,15 +67,16 @@ public class Player {
         	if(moveCounter>=5) {
         		checkCollisionAndMove();
         		moveCounter = moveCounter++;
+        }
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
         	moveCounter--;
         	if(moveCounter>=5) {
         		checkCollisionAndMove();
             	moveCounter = moveCounter--;
         }
-        	}
-        }
     }
+}
+ 
 
     public void checkCollisionAndMove(){
         handler.getWorld().playerLocation[xCoord][yCoord]=false;
