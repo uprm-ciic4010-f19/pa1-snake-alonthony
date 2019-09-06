@@ -49,7 +49,7 @@ public class Player {
         moveCounter++;
         if(moveCounter>=5) {
             checkCollisionAndMove();
-            moveCounter=4; // (Anthony) cambiado de 0 a 3 para aumentar la velocidad
+            moveCounter=3; // (Anthony) cambiado de 0 a 3 para aumentar la velocidad
         	
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
             direction="Up";
@@ -123,7 +123,7 @@ public class Player {
         
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
         	Eat();
-        	currScore = Math.sqrt(2*currScore+1);//cuando coma la manzana enseï¿½e el score (Alondra)
+        	currScore = Math.sqrt(2*currScore+1);//cuando coma la manzana enseñe el score (Alondra)
         	currScore++;
 			}
                      
@@ -139,7 +139,8 @@ public class Player {
             for (int i = 0; i < handler.getWorld().body.size() ; i++) { //manda el mensaje "Game Over" cuando se choca con el mismo
     			if (xCoord==handler.getWorld().body.get(i).x && yCoord==handler.getWorld().body.get(i).y){
     				if (i != handler.getWorld().body.size() -1) {
-    					System.out.println("Game Over");
+    					Game.GameStates.State.setState(handler.getGame().gameoverState); //muestra la imagen de game over
+    					
     				}
     			}
     		}
@@ -156,7 +157,9 @@ public class Player {
             	
             	
             	g.setColor(Color.WHITE); //color del texto (Alondra)
-            	g.drawString("Score: "+currScore,20, 20); //proyecta el score en el juego (Alondra)            	g.setColor(Color.GREEN); // (Anthony) cambie el color del snake de .WHITE a .GREEN
+            	g.drawString("Score: "+currScore,20, 20); //proyecta el score en el juego (Alondra)  
+            	
+            	g.setColor(Color.GREEN); // (Anthony) cambie el color del snake de .WHITE a .GREEN
             	
                 if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){
                     g.fillRect((i*handler.getWorld().GridPixelsize),
