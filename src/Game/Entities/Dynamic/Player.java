@@ -137,7 +137,8 @@ public class Player {
             for (int i = 0; i < handler.getWorld().body.size() ; i++) { //manda el mensaje "Game Over" cuando se choca con el mismo
     			if (xCoord==handler.getWorld().body.get(i).x && yCoord==handler.getWorld().body.get(i).y){
     				if (i != handler.getWorld().body.size() -1) {
-    					Game.GameStates.State.setState(handler.getGame().gameoverState); //muestra la imagen de game over
+    					Game.GameStates.State.setState(handler.getGame().gameoverState); //llamando al state game over para cuando 
+    																						//choque diga "Game over (Alondra)
     					
     				}
     			}
