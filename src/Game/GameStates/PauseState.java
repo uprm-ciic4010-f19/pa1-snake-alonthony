@@ -61,7 +61,7 @@ public class PauseState extends State {
     @Override
     public void render(Graphics g) {
         g.drawImage(Images.Pause,0,0,handler.getWidth(),handler.getHeight(),null);//cambiar el size del display
-        																		 //para que asi cubra el "window"
+        																	 //para que asi cubra el "window"
         uiManager.Render(g);
 
     }
