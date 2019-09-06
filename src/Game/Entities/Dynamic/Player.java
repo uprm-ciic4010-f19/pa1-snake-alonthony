@@ -1,14 +1,11 @@
 package Game.Entities.Dynamic;
 
-import Main.Handler;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
-//import com.sun.corba.se.spi.orbutil.fsm.State;
-
-import Game.GameStates.PauseState;
-import Game.Entities.Static.*;
+import Main.Handler;
 
 
 /**
