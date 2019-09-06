@@ -11,6 +11,9 @@ public class GameOverState extends State {
 	private int count = 0;
     private UIManager uiManager;
 
+    //se crea la clase/state GameOver similar a la de Pause para cuando choque salga la imagen de game over
+    //la unica diferencia es que el game over no va a tener botones (Alondra)
+    
     public GameOverState(Handler handler) {
     	
     	
@@ -43,8 +46,8 @@ public class GameOverState extends State {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Images.GameOver,0,0,handler.getWidth(),handler.getHeight(),null);
-        uiManager.Render(g);
+        g.drawImage(Images.GameOver,0,0,handler.getWidth(),handler.getHeight(),null); //para llamar a la imagen
+        uiManager.Render(g);                     									//(Alondra)
 
     }
 }

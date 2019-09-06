@@ -1,7 +1,7 @@
 package Main;
 
 import Display.DisplayScreen;
-import Game.GameStates.GameOverState;
+import Game.GameStates.GameOverState; //para llamar al state game over cuando lo necesited (Alondra)
 import Game.GameStates.GameState;
 import Game.GameStates.MenuState;
 import Game.GameStates.PauseState;
@@ -46,7 +46,7 @@ public class GameSetUp implements Runnable {
     public State gameState;
     public State menuState;
     public State pauseState;
-    public State gameoverState; //(Alondra)
+    public State gameoverState; // clasificarlo como un state con los demas (Alondra)
 
     //Res.music
     private InputStream audioFile;
@@ -83,7 +83,7 @@ public class GameSetUp implements Runnable {
         gameState = new GameState(handler);
         menuState = new MenuState(handler);
         pauseState = new PauseState(handler);
-        gameoverState= new GameOverState(handler); //(Alondra)
+        gameoverState= new GameOverState(handler); //variable para llamar el state (Alondra)
 
         State.setState(menuState);
 
