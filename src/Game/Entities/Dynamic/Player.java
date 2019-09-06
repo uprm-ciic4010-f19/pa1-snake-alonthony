@@ -1,14 +1,11 @@
 package Game.Entities.Dynamic;
 
-import Main.Handler;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
-//import com.sun.corba.se.spi.orbutil.fsm.State;
-
-import Game.GameStates.PauseState;
-import Game.Entities.Static.*;
+import Main.Handler;
 
 
 /**
@@ -59,10 +56,13 @@ public class Player {
             direction="Left";
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)){
             direction="Right";
+            
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te añade un segmento de la cola (Alondra)
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
+        	
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego (Alondra)
         	Game.GameStates.State.setState(handler.getGame().pauseState);
+        	
         	// (ANTHONY) - En el siguiente codigo implemento los comandos de "+" y "-"
         	// para aumentar o disminuir la velocidad de la serpiente
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
@@ -136,7 +136,8 @@ public class Player {
             for (int i = 0; i < handler.getWorld().body.size() ; i++) { //manda el mensaje "Game Over" cuando se choca con el mismo
     			if (xCoord==handler.getWorld().body.get(i).x && yCoord==handler.getWorld().body.get(i).y){
     				if (i != handler.getWorld().body.size() -1) {
-    					System.out.println("Game Over");
+    					Game.GameStates.State.setState(handler.getGame().gameoverState);
+    					
     				}
     			}
     		}
@@ -153,6 +154,8 @@ public class Player {
             	
             	g.setColor(Color.WHITE); //color del texto (Alondra)
             	g.drawString("Score: "+currScore,20, 20); //proyecta el score en el juego (Alondra)
+            	
+            	//g.setColor(Color.BLACK); for apple
             	
             	g.setColor(Color.GREEN); // (ANTHONY) cambie el color del snake de .WHITE a .GREEN
             	

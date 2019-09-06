@@ -51,7 +51,7 @@ public class DisplayScreen {
         canvas.setMaximumSize(new Dimension(width, height));
         canvas.setMinimumSize(new Dimension(width, height));
         canvas.setFocusable(false);
-        canvas.setBackground(new Color(128, 0, 128));//Cambiar el color de Black a purple usando RGB values (Alondra)
+        canvas.setBackground(new Color(128, 0, 128));//Cambiar el color del background de Black a purple usando RGB values (Alondra)
 
         frame.add(canvas);
         frame.pack();
