@@ -4,7 +4,17 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import Main.Handler;
 
@@ -29,13 +39,19 @@ public class Player {
 	private double currScore; 
 	public Graphics g;
 	
+	//Res.music
+    private InputStream audioFile;
+    private AudioInputStream audioStream;
+    private AudioFormat format;
+    private DataLine.Info info;
+    private Clip audioClip;
 	
 	public Player(Handler handler){
         this.handler = handler;
         xCoord = 30; // og - 0
         yCoord = 30; // og - 0
-        moveCounter = 1; // og -0
-        speedManager = 4; // (anthony) variable nueva
+        moveCounter = 0; // og -0
+        speedManager = 10; // (anthony) variable nueva
         direction= "Down"; // og - "Right"
         justAte = false;
         length= 1;
@@ -45,10 +61,11 @@ public class Player {
 
 	public void tick(){
         moveCounter += 1;
+       // speedManager += 1;
         if(moveCounter >= speedManager) { // (Anthony) agregue variable para iterar la velocidad
             checkCollisionAndMove();
             moveCounter += 2; 
-            speedManager -= 1;
+            speedManager += 1;
         	
       //  }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
       //     direction="Up";
@@ -70,7 +87,7 @@ public class Player {
             
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
             direction="Up";
-            
+             
             
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN)){
             direction="Down";
@@ -176,12 +193,25 @@ public class Player {
     				if (i != handler.getWorld().body.size() -1) {
     					Game.GameStates.State.setState(handler.getGame().gameoverState); //llamando al state game over para cuando 
     																						//choque diga "Game over (Alondra)
-    					
+    					try {
+    						audioFile = getClass().getResourceAsStream("/music/gameOverSound.wav"); //(Anthony) 
+    						audioStream = AudioSystem.getAudioInputStream(audioFile);			 	//Game Over
+    						format = audioStream.getFormat();										//Sound Effect
+    						info = new DataLine.Info(Clip.class, format);							//
+    						audioClip = (Clip) AudioSystem.getLine(info);					 		//
+    						audioClip.open(audioStream);									 		//
+    						audioClip.loop(0);  													//
+    					} catch (UnsupportedAudioFileException e) {									//
+    						e.printStackTrace();													//
+    					} catch (IOException e) {													//
+    						e.printStackTrace();													//
+    					} catch (LineUnavailableException e) {										//
+    						e.printStackTrace();													//
+    					}
     				}
     			}
-    		}
+            }
         }
-       
     }
    
     public void render(Graphics g,Boolean[][] playeLocation){
@@ -209,8 +239,8 @@ public class Player {
     }
 
     public void Eat(){
-    	speedManager -= 5; // (anthony) - mi ultimo digito es 4 (entonces, 4 + 1 = 5)
-    	//moveCounter += 5;
+    	//speedManager += 5; // (anthony) - mi ultimo digito es 4 (entonces, 4 + 1 = 5)
+    	moveCounter = moveCounter + 5;
         length++;
         Tail tail= null;
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
