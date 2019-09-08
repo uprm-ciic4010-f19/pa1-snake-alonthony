@@ -18,7 +18,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import Main.Handler;
 
-
 /**
  * Created by AlexVR on 7/2/2018.
  */
@@ -51,7 +50,7 @@ public class Player {
         xCoord = 30; // og - 0
         yCoord = 30; // og - 0
         moveCounter = 0; // og -0
-        speedManager = 10; // (anthony) variable nueva
+        speedManager = 5; // (anthony) variable nueva
         direction= "Down"; // og - "Right"
         justAte = false;
         length= 1;
@@ -64,8 +63,8 @@ public class Player {
        // speedManager += 1;
         if(moveCounter >= speedManager) { // (Anthony) agregue variable para iterar la velocidad
             checkCollisionAndMove();
-            moveCounter += 2; 
-            speedManager += 1;
+            moveCounter = 0; 
+           // speedManager;
         	
       //  }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
       //     direction="Up";
@@ -239,8 +238,8 @@ public class Player {
     }
 
     public void Eat(){
-    	//speedManager += 5; // (anthony) - mi ultimo digito es 4 (entonces, 4 + 1 = 5)
-    	moveCounter = moveCounter + 5;
+    	speedManager -= 1; // (anthony) - mi ultimo digito es 4 (entonces, 4 + 1 = 5)
+    	//moveCounter = moveCounter + 5;
         length++;
         Tail tail= null;
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
@@ -368,5 +367,4 @@ public class Player {
 
     public void setJustAte(boolean justAte) {
         this.justAte = justAte;
-    }
-}
+}}
