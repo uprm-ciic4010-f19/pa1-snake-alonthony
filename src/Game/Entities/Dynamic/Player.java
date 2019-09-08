@@ -34,8 +34,8 @@ public class Player {
         this.handler = handler;
         xCoord = 30; // og - 0
         yCoord = 30; // og - 0
-        moveCounter = 0; // og -0
-        speedManager = 8; // (anthony) variable nueva
+        moveCounter = 1; // og -0
+        speedManager = 4; // (anthony) variable nueva
         direction= "Down"; // og - "Right"
         justAte = false;
         length= 1;
@@ -44,11 +44,11 @@ public class Player {
     }
 
 	public void tick(){
-        moveCounter++;
+        moveCounter += 1;
         if(moveCounter >= speedManager) { // (Anthony) agregue variable para iterar la velocidad
             checkCollisionAndMove();
-            moveCounter = 0; 
- 
+            moveCounter += 2; 
+            speedManager -= 1;
         	
       //  }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
       //     direction="Up";
@@ -58,7 +58,14 @@ public class Player {
       //      direction="Left";
       //  }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)){
       //      direction="Right";
-            
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)){
+        	direction="Up";
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)){
+        	direction="Down";
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_A)){
+        	direction="Left";
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_D)){
+        	direction="Right";    
             
             
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
@@ -93,12 +100,14 @@ public class Player {
      
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
         	checkCollisionAndMove();
-        	speedManager++;
+        	speedManager -= 15;
+        	moveCounter += 10;
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
         	checkCollisionAndMove();
-        	speedManager--;     
+        	speedManager += 15;
+        	moveCounter -= 10;
         }
-                	
+	}        	
         	
 //        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
 //    		checkCollisionAndMove();
@@ -108,7 +117,7 @@ public class Player {
 //        	moveCounter--;
 //        }
         	
-		}
+		
         
     public void checkCollisionAndMove(){
         handler.getWorld().playerLocation[xCoord][yCoord]=false;
@@ -200,8 +209,8 @@ public class Player {
     }
 
     public void Eat(){
-    	speedManager = speedManager -1; // (anthony) - mi ultimo digito es 4 (entonces, 4 + 1 = 5)
-    	moveCounter ++;
+    	speedManager -= 5; // (anthony) - mi ultimo digito es 4 (entonces, 4 + 1 = 5)
+    	//moveCounter += 5;
         length++;
         Tail tail= null;
         handler.getWorld().appleLocation[xCoord][yCoord]=false;

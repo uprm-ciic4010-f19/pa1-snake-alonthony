@@ -16,7 +16,8 @@ public class KeyManager implements KeyListener {
 	public boolean pbutt=false;
 	public boolean plus = false; //
 	public boolean minus = false; //(anthony) variables para "+" y "-"
-
+	public boolean w=false, a=false, s=false, d=false; // (anthony), teclas wasd para moverse
+	
 	public KeyManager(){
 
 		keys = new boolean[256];
