@@ -4,7 +4,17 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import Main.Handler;
 
@@ -23,65 +33,109 @@ public class Player {
     public int yCoord;
 
     public int moveCounter; 
-
+    public int speedManager; //(anthony) variable
+    
     public String direction;//is your first name one?
 	private double currScore; 
 	public Graphics g;
 	
+	//Res.music
+    private InputStream audioFile;
+    private AudioInputStream audioStream;
+    private AudioFormat format;
+    private DataLine.Info info;
+    private Clip audioClip;
 	
 	public Player(Handler handler){
         this.handler = handler;
-        xCoord = 0;
-        yCoord = 0;
-        moveCounter = 0;
-        direction= "Right";
+        xCoord = 30; // og - 0
+        yCoord = 30; // og - 0
+        moveCounter = 0; // og -0
+        speedManager = 5; // (anthony) variable nueva
+        direction= "Down"; // og - "Right"
         justAte = false;
         length= 1;
         currScore = 0;
         
     }
 
-   
-
 	public void tick(){
-        moveCounter++;
-        if(moveCounter>=5) {
+        moveCounter += 1;
+       // speedManager += 1;
+        if(moveCounter >= speedManager) { // (Anthony) agregue variable para iterar la velocidad
             checkCollisionAndMove();
-            moveCounter=3; // (Anthony) cambiado de 0 a 3 para aumentar la velocidad
+            moveCounter = 0; 
+           // speedManager;
         	
+      //  }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
+      //     direction="Up";
+      //  }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN)){
+      //      direction="Down";
+      //  }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT)){
+      //      direction="Left";
+      //  }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)){
+      //      direction="Right";
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)){
+        	direction="Up";
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)){
+        	direction="Down";
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_A)){
+        	direction="Left";
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_D)){
+        	direction="Right";    
+            
+            
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
             direction="Up";
+             
+            
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN)){
             direction="Down";
+            
+            
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT)){
             direction="Left";
+            
+            
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)){
             direction="Right";
             
-        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te aade un segmento de la cola (Alondra)
+            
+            
+            
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te agrega un segmento de la cola (Alondra)
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
         	
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego (Alondra)
         	Game.GameStates.State.setState(handler.getGame().pauseState);
+        }
         	
-        	// (Anthony) - En el siguiente codigo implemento los comandos de "+" y "-"
-        	// para aumentar o disminuir la velocidad de la serpiente
-        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
-        	moveCounter++;
-        	if(moveCounter>=5) {
-        		checkCollisionAndMove();
-        		moveCounter = moveCounter++;
+	   /**
+		* (Anthony) - En el siguiente codigo implemento los comandos de "+" y "-" para
+		* aumentar o disminuir la velocidad de la serpiente
+		*/
+     
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
+        	checkCollisionAndMove();
+        	speedManager -= 15;
+        	moveCounter += 10;
+        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
+        	checkCollisionAndMove();
+        	speedManager += 15;
+        	moveCounter -= 10;
         }
-        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
-        	moveCounter--;
-        	if(moveCounter>=5) {
-        		checkCollisionAndMove();
-            	moveCounter = moveCounter--;
-        }
-    }
-}
- 
-
+	}        	
+        	
+//        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
+//    		checkCollisionAndMove();
+//        	moveCounter++;
+//        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
+//    		checkCollisionAndMove();
+//        	moveCounter--;
+//        }
+        	
+		
+        
     public void checkCollisionAndMove(){
         handler.getWorld().playerLocation[xCoord][yCoord]=false;
         int x = xCoord;
@@ -139,27 +193,38 @@ public class Player {
     				if (i != handler.getWorld().body.size() -1) {
     					Game.GameStates.State.setState(handler.getGame().gameoverState); //llamando al state game over para cuando 
     																						//choque diga "Game over (Alondra)
-    					
+    					try {
+    						audioFile = getClass().getResourceAsStream("/music/gameOverSound.wav"); //(Anthony) 
+    						audioStream = AudioSystem.getAudioInputStream(audioFile);			 	//Game Over
+    						format = audioStream.getFormat();										//Sound Effect
+    						info = new DataLine.Info(Clip.class, format);							//
+    						audioClip = (Clip) AudioSystem.getLine(info);					 		//
+    						audioClip.open(audioStream);									 		//
+    						audioClip.loop(0);  													//
+    					} catch (UnsupportedAudioFileException e) {									//
+    						e.printStackTrace();													//
+    					} catch (IOException e) {													//
+    						e.printStackTrace();													//
+    					} catch (LineUnavailableException e) {										//
+    						e.printStackTrace();													//
+    					}
     				}
     			}
-    		}
+            }
         }
-       
     }
-
-    
-    
+   
     public void render(Graphics g,Boolean[][] playeLocation){
         new Random();
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
             	
-            	g.setFont(new Font("Times New Roman", Font.PLAIN , 18));
+            	g.setFont(new Font("Comic Sans MS", Font.PLAIN , 19)); //(Anthony) cambie el font
             	g.setColor(Color.WHITE); //color del texto (Alondra)
             	g.drawString("Score: "+currScore,20, 20); //proyecta el score en el juego (Alondra)  
-            	
-            	
+            	g.drawString("Length: "+length, 690, 20); //(anthony) demuestra el length de la serpiente
             	g.setColor(Color.GREEN); // (Anthony) cambie el color del snake de .WHITE a .GREEN
+            	
                 if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){
                     g.fillRect((i*handler.getWorld().GridPixelsize),
                             (j*handler.getWorld().GridPixelsize),
@@ -182,6 +247,8 @@ public class Player {
     }
 
     public void Eat(){
+    	speedManager -= 1; // (anthony) - mi ultimo digito es 4 (entonces, 4 + 1 = 5)
+    	//moveCounter = moveCounter + 5;
         length++;
         Tail tail= null;
         
@@ -304,7 +371,6 @@ public class Player {
        
 	}
     
-
     public boolean isJustAte() {
         return justAte;
     }

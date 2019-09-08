@@ -1,7 +1,7 @@
 package Main;
 
 import Display.DisplayScreen;
-import Game.GameStates.GameOverState; //para llamar al state game over cuando lo necesited (Alondra)
+import Game.GameStates.GameOverState; //para llamar al state game over cuando lo necesite (Alondra)
 import Game.GameStates.GameState;
 import Game.GameStates.MenuState;
 import Game.GameStates.PauseState;
@@ -90,7 +90,7 @@ public class GameSetUp implements Runnable {
 
         try {
 
-            audioFile = getClass().getResourceAsStream("/music/nature.wav");
+            audioFile = getClass().getResourceAsStream("/music/hardRock.wav"); //(Anthony) music change
             audioStream = AudioSystem.getAudioInputStream(audioFile);
             format = audioStream.getFormat();
             info = new DataLine.Info(Clip.class, format);
@@ -122,7 +122,7 @@ public class GameSetUp implements Runnable {
 
     public void run(){
 
-        //initiallizes everything in order to run without breaking
+        //initializes everything in order to run without breaking
         init();
 
         int fps = 60;

@@ -2,6 +2,7 @@ package Input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.logging.Handler;
 
 
 /**
@@ -13,8 +14,10 @@ public class KeyManager implements KeyListener {
 	private boolean[] keys,justPressed,cantPress;
 	public boolean up=false, down=false, left=false, right=false; 
 	public boolean pbutt=false;
-
-
+	public boolean plus = false; //
+	public boolean minus = false; //(anthony) variables para "+" y "-"
+	public boolean w=false, a=false, s=false, d=false; // (anthony), teclas wasd para moverse
+	
 	public KeyManager(){
 
 		keys = new boolean[256];
@@ -42,7 +45,8 @@ public class KeyManager implements KeyListener {
 		left = keys[KeyEvent.VK_A];
         right = keys[KeyEvent.VK_D];
 		pbutt = keys[KeyEvent.VK_ESCAPE];
-
+		plus = keys[KeyEvent.VK_EQUALS]; 	//
+		minus = keys[KeyEvent.VK_MINUS]; 	//(anthony) variables "+" y "-"
 	}
 
 	@Override
