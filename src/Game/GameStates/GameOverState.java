@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import Main.Handler;
 import Resources.Images;
+import UI.ClickListlener;
 import UI.UIImageButton;
 import UI.UIManager;
 
@@ -12,7 +13,9 @@ public class GameOverState extends State {
     private UIManager uiManager;
 
     //se crea la clase/state GameOver similar a la de Pause para cuando choque salga la imagen de game over
-    //la unica diferencia es que el game over no va a tener botones (Alondra)
+    //(Alondra)
+    
+    
     
     public GameOverState(Handler handler) {
     	
@@ -21,7 +24,14 @@ public class GameOverState extends State {
         uiManager = new UIManager(handler);
         handler.getMouseManager().setUimanager(uiManager);
 
-
+        uiManager.addObjects(new UIImageButton(handler.getWidth()/2-64, handler.getHeight()/1-275, 128, 40, Images.butstart, new ClickListlener() {
+            @Override
+            public void onClick() {
+                handler.getMouseManager().setUimanager(null);
+                handler.getGame().reStart();
+                State.setState(handler.getGame().gameState);
+            }
+        }));
         
 
 

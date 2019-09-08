@@ -158,15 +158,23 @@ public class Player {
             	g.setColor(Color.WHITE); //color del texto (Alondra)
             	g.drawString("Score: "+currScore,20, 20); //proyecta el score en el juego (Alondra)  
             	
-            	g.setColor(Color.GREEN); // (Anthony) cambie el color del snake de .WHITE a .GREEN
             	
+            	g.setColor(Color.GREEN); // (Anthony) cambie el color del snake de .WHITE a .GREEN
                 if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){
                     g.fillRect((i*handler.getWorld().GridPixelsize),
                             (j*handler.getWorld().GridPixelsize),
                             handler.getWorld().GridPixelsize,
                             handler.getWorld().GridPixelsize);
+                    
+                    //if(handler.getWorld().isGood(appleLocation[i][j])){
+                	//break;
+                	//}else{
+                	//currScore--;
+
                 }
 
+                //g.setColor(Color.BLACK);
+                //handler.getWorld().appleLocation;
             }
         }
 
@@ -176,6 +184,7 @@ public class Player {
     public void Eat(){
         length++;
         Tail tail= null;
+        
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
         handler.getWorld().appleOnBoard=false;
         
