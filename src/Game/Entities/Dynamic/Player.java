@@ -128,30 +128,30 @@ public class Player {
         int x = xCoord;
         int y = yCoord;
         switch (direction){
-            case "Left":
-                if(xCoord==0){
-                    kill();
+        	case "Left":
+        		if(xCoord==0){
+        			xCoord = handler.getWorld().GridWidthHeightPixelCount-1;
                 }else{
-                    xCoord--;
+        			xCoord--;
                 }
-                break;
+        		break;
             case "Right":
                 if(xCoord==handler.getWorld().GridWidthHeightPixelCount-1){
-                    kill();
+                    xCoord = 0;
                 }else{
                     xCoord++;
                 }
                 break;
             case "Up":
                 if(yCoord==0){
-                    kill();
+                    yCoord = handler.getWorld().GridWidthHeightPixelCount-1;
                 }else{
                     yCoord--;
                 }
                 break;
             case "Down":
                 if(yCoord==handler.getWorld().GridWidthHeightPixelCount-1){
-                    kill();
+                    yCoord = 0;
                 }else{
                     yCoord++;
                 }
