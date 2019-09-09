@@ -55,7 +55,7 @@ public class Player {
         direction= "Right";
         justAte = false;
         length= 1;
-        currScore = 0;
+        currScore = 0; //variable para "store" los puntos despues que coma la manzana (Alondra)
         
     }
 
@@ -101,10 +101,11 @@ public class Player {
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)){
         	 if (!direction.equals("Left")) {
               	direction = "Right";
-              	}            
+              	}      
+        	 
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te agrega un segmento de la cola (Alondra)
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
-        	
+        	length++;
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego (Alondra)
         	Game.GameStates.State.setState(handler.getGame().pauseState);
                	
@@ -179,21 +180,21 @@ public class Player {
     			if (xCoord==handler.getWorld().body.get(i).x && yCoord==handler.getWorld().body.get(i).y){
     				if (i != handler.getWorld().body.size() -1) {
     					Game.GameStates.State.setState(handler.getGame().gameoverState); //llamando al state game over para cuando 
-    																						//choque diga "Game over (Alondra)
+    																					//choque diga "Game over (Alondra)
     					try {
     						audioFile = getClass().getResourceAsStream("/music/gameOverSound.wav"); //(Anthony) 
     						audioStream = AudioSystem.getAudioInputStream(audioFile);			 	//Game Over
     						format = audioStream.getFormat();										//Sound Effect
-    						info = new DataLine.Info(Clip.class, format);							//
-    						audioClip = (Clip) AudioSystem.getLine(info);					 		//
-    						audioClip.open(audioStream);									 		//
-    						audioClip.loop(0);  													//
-    					} catch (UnsupportedAudioFileException e) {									//
-    						e.printStackTrace();													//
-    					} catch (IOException e) {													//
-    						e.printStackTrace();													//
-    					} catch (LineUnavailableException e) {										//
-    						e.printStackTrace();													//
+    						info = new DataLine.Info(Clip.class, format);							
+    						audioClip = (Clip) AudioSystem.getLine(info);					 		
+    						audioClip.open(audioStream);									 		
+    						audioClip.loop(0);  													
+    					} catch (UnsupportedAudioFileException e) {									
+    						e.printStackTrace();													
+    					} catch (IOException e) {													
+    						e.printStackTrace();													
+    					} catch (LineUnavailableException e) {										
+    						e.printStackTrace();													
     					}
     				}
     			}
@@ -210,8 +211,8 @@ public class Player {
             	g.setColor(Color.WHITE); //color del texto (Alondra)
             	g.drawString("Score: "+currScore,20, 20); //proyecta el score en el juego (Alondra)  
             	g.drawString("Length: "+length, 690, 20); //(anthony) demuestra el length de la serpiente
-            	g.setColor(Color.GREEN); // (Anthony) cambie el color del snake de .WHITE a .GREEN
             	
+            	g.setColor(Color.GREEN); // (Anthony) cambie el color del snake de .WHITE a .GREEN
                 if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){
                     g.fillRect((i*handler.getWorld().GridPixelsize),
                             (j*handler.getWorld().GridPixelsize),
