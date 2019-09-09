@@ -48,11 +48,11 @@ public class Player {
 	
 	public Player(Handler handler){
         this.handler = handler;
-        xCoord = 30; // og - 0
-        yCoord = 30; // og - 0
-        moveCounter = 0; // og -0
+        xCoord = 0; 
+        yCoord = 0; 
+        moveCounter = 0; 
         speedManager = 5; // (anthony) variable nueva
-        direction= "Down"; // og - "Right"
+        direction= "Right";
         justAte = false;
         length= 1;
         currScore = 0;
@@ -84,11 +84,20 @@ public class Player {
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_D)){
         	direction="Right";    
             
-            
+//        	if (e.getKeyCode() == KeyEvent.VK_UP) {
+//    			up = true;
+//    			if (!down) {
+//    				up = true;
+//    			}else {
+//    				up = false;
+//    				down = true;
+//    			}left = false;
+//    			right = false;
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
-            direction="Up";
-             
-            
+            direction ="Up";
+            	
+	 
+	
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN)){
             direction="Down";
             
@@ -98,24 +107,19 @@ public class Player {
             
             
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)){
-            direction="Right";
-            
-            
-            
+            direction="Right";                     
             
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te agrega un segmento de la cola (Alondra)
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
         	
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego (Alondra)
         	Game.GameStates.State.setState(handler.getGame().pauseState);
-        }
-        	
+               	
 	   /**
 		* (Anthony) - En el siguiente codigo implemento los comandos de "+" y "-" para
 		* aumentar o disminuir la velocidad de la serpiente
 		*/
-     
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
+        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
         	checkCollisionAndMove();
         	speedManager -= 15;
         	moveCounter += 10;
@@ -124,17 +128,7 @@ public class Player {
         	speedManager += 15;
         	moveCounter -= 10;
         }
-	}        	
-        	
-//        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
-//    		checkCollisionAndMove();
-//        	moveCounter++;
-//        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
-//    		checkCollisionAndMove();
-//        	moveCounter--;
-//        }
-        	
-		
+	}        	        	       		
         
     public void checkCollisionAndMove(){
         handler.getWorld().playerLocation[xCoord][yCoord]=false;
@@ -175,8 +169,8 @@ public class Player {
         
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
         	Eat();
-        	currScore = Math.sqrt(2*currScore+1);//cuando coma la manzana enseñe el score (Alondra)
-        	currScore++;
+        	currScore += Math.sqrt(2*currScore+1);//cuando coma la manzana enseñe el score (Alondra)
+        	//currScore++; (anthony) el score se estaba quedando en los 3.99, lo modifique para arreglarlo
 			}
                      
         
@@ -185,7 +179,7 @@ public class Player {
             handler.getWorld().body.removeLast();
             handler.getWorld().body.addFirst(new Tail(x, y,handler));
             // basicamente, coge la ultima parte del snake (tail) y la mueve al "cuello" (1 antes del head) cuando
-            //  se mueve, simulando o dando la ilusion de que el snake se esta "moviedo"
+            //  se mueve, simulando o dando la ilusion de que el snake se esta "moviendo"
             // El "cuello" es donde la cabeza de la serpiente solia estar
    
             for (int i = 0; i < handler.getWorld().body.size() ; i++) { //manda el mensaje "Game Over" cuando se choca con el mismo
@@ -247,7 +241,7 @@ public class Player {
     }
 
     public void Eat(){
-    	speedManager -= 1; // (anthony) - mi ultimo digito es 4 (entonces, 4 + 1 = 5)
+    	speedManager -= 1; // (anthony) add speed when the snake eats
     	//moveCounter = moveCounter + 5;
         length++;
         Tail tail= null;

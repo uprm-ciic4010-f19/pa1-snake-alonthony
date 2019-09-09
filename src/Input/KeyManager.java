@@ -14,9 +14,8 @@ public class KeyManager implements KeyListener {
 	private boolean[] keys,justPressed,cantPress;
 	public boolean up=false, down=false, left=false, right=false; 
 	public boolean pbutt=false;
-	public boolean plus = false; //
-	public boolean minus = false; //(anthony) variables para "+" y "-"
 	public boolean w=false, a=false, s=false, d=false; // (anthony), teclas wasd para moverse
+	public boolean arrowUp=false, arrowDown =false, arrowLeft=false, arrowRight=false;//
 	
 	public KeyManager(){
 
@@ -44,9 +43,11 @@ public class KeyManager implements KeyListener {
 		down = keys[KeyEvent.VK_S];
 		left = keys[KeyEvent.VK_A];
         right = keys[KeyEvent.VK_D];
-		pbutt = keys[KeyEvent.VK_ESCAPE];
-		plus = keys[KeyEvent.VK_EQUALS]; 	//
-		minus = keys[KeyEvent.VK_MINUS]; 	//(anthony) variables "+" y "-"
+        arrowUp = keys[KeyEvent.VK_UP];			//
+		arrowDown = keys[KeyEvent.VK_DOWN];		//(anthony) variables
+		arrowLeft = keys[KeyEvent.VK_LEFT];		//para direction keys
+        arrowRight = keys[KeyEvent.VK_RIGHT];	//
+		pbutt = keys[KeyEvent.VK_ESCAPE];			
 	}
 
 	@Override
