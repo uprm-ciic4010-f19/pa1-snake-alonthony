@@ -12,6 +12,7 @@ public class Images {
 
 
     public static BufferedImage[] butstart;
+    public static BufferedImage[] butrestart;
     public static BufferedImage title;
     public static BufferedImage Pause;
     public static BufferedImage GameOver; //un "upload" a la imagen para que sea vea (Alondra)
@@ -21,7 +22,8 @@ public class Images {
     public static ImageIcon icon;
 
     public Images() {
-
+    	
+    	butrestart= new BufferedImage[3];
         butstart = new BufferedImage[3];
         Resume = new BufferedImage[2];
         BTitle = new BufferedImage[2];
@@ -41,6 +43,10 @@ public class Images {
             butstart[0]= ImageIO.read(getClass().getResourceAsStream("/Buttons/NormBut.png"));//normbut
             butstart[1]= ImageIO.read(getClass().getResourceAsStream("/Buttons/HoverBut.png"));//hoverbut
             butstart[2]= ImageIO.read(getClass().getResourceAsStream("/Buttons/ClickedBut.png"));//clickbut
+            
+            butrestart[0]= ImageIO.read(getClass().getResourceAsStream("/Buttons/normRest.png"));//normbut
+            butrestart[1]= ImageIO.read(getClass().getResourceAsStream("/Buttons/HoverRest.png"));//hoverbut
+            butrestart[2]= ImageIO.read(getClass().getResourceAsStream("/Buttons/clickedRest.png"));//clickbut
 
             icon =  new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/Sheets/icon.png")));
 

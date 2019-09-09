@@ -1,7 +1,7 @@
 package Main;
 
 import Display.DisplayScreen;
-import Game.GameStates.GameOverState; //para llamar al state game over cuando lo necesite (Alondra)
+import Game.GameStates.GameOverState; //imported con los demas states (Alondra)
 import Game.GameStates.GameState;
 import Game.GameStates.MenuState;
 import Game.GameStates.PauseState;
