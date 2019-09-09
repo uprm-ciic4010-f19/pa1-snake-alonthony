@@ -67,48 +67,41 @@ public class Player {
             moveCounter = 0; 
            // speedManager;
         	
-      //  }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
-      //     direction="Up";
-      //  }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN)){
-      //      direction="Down";
-      //  }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT)){
-      //      direction="Left";
-      //  }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)){
-      //      direction="Right";
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)){
-        	direction="Up";
+            if (!direction.equals("Down")) {
+            	direction = "Up";
+            	}      	
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)){
-        	direction="Down";
+        	 if (!direction.equals("Up")) {
+             	direction = "Down";
+             	}
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_A)){
-        	direction="Left";
+        	 if (!direction.equals("Right")) {
+              	direction = "Left";
+              	}              
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_D)){
-        	direction="Right";    
-            
-//        	if (e.getKeyCode() == KeyEvent.VK_UP) {
-//    			up = true;
-//    			if (!down) {
-//    				up = true;
-//    			}else {
-//    				up = false;
-//    				down = true;
-//    			}left = false;
-//    			right = false;
+        	 if (!direction.equals("Left")) {
+              	direction = "Right";
+              	}             
+        	 /*
+        	  * (Anthony) prevented Backtracking in the following lines of code
+        	  */
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
-            direction ="Up";
-            	
-	 
-	
+            if (!direction.equals("Down")) {
+            	direction = "Up";
+            	}      	
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN)){
-            direction="Down";
-            
-            
+        	 if (!direction.equals("Up")) {
+             	direction = "Down";
+             	}
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT)){
-            direction="Left";
-            
-            
+        	 if (!direction.equals("Right")) {
+              	direction = "Left";
+              	}              
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)){
-            direction="Right";                     
-            
+        	 if (!direction.equals("Left")) {
+              	direction = "Right";
+              	}            
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te agrega un segmento de la cola (Alondra)
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
         	
@@ -362,7 +355,6 @@ public class Player {
                
             }
         }
-       
 	}
     
     public boolean isJustAte() {
