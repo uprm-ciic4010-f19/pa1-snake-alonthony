@@ -25,6 +25,7 @@ public class MenuState extends State {
         uiManager.addObjects(new UIImageButton(handler.getWidth()/2-64, handler.getHeight()/2-32, 128, 64, Images.butstart, new ClickListlener() {
             @Override
             public void onClick() {
+            	handler.getMusicManager().playMusic("/music/startButtonClickFX.wav"); //(Anthony) sonido en el boton "start"
                 handler.getMouseManager().setUimanager(null);
                 handler.getGame().reStart();
                 State.setState(handler.getGame().gameState);

@@ -2,6 +2,7 @@ package Game.GameStates;
 
 import Main.Handler;
 import Resources.Images;
+import UI.ClickListlener; //(anthony)
 import UI.UIImageButton;
 import UI.UIManager;
 
@@ -19,25 +20,33 @@ public class PauseState extends State {
         super(handler);
         uiManager = new UIManager(handler);
         handler.getMouseManager().setUimanager(uiManager);
-
-        uiManager.addObjects(new UIImageButton(56, 223, 128, 64, Images.Resume, () -> {
-            handler.getMouseManager().setUimanager(null);
-            State.setState(handler.getGame().gameState);
+        
+        uiManager.addObjects(new UIImageButton(handler.getWidth()/2-340, handler.getHeight()/2-180, 128, 64, Images.Resume, new ClickListlener()  {// (Anthony)
+        	@Override																															   // modifique un poco el codigo
+        	public void onClick() {																												   // para que los botones puedan		
+            	handler.getMusicManager().playMusic("/music/resumeSoundFX.wav"); //(Anthony) sonido en el boton "Resume"						   // tener los sound effects  
+        		handler.getMouseManager().setUimanager(null);																					    
+        		State.setState(handler.getGame().gameState);																					    
+        	}
         }));
 
-        uiManager.addObjects(new UIImageButton(56, 223+(64+16), 128, 64, Images.Options, () -> {
-            handler.getMouseManager().setUimanager(null);
-            State.setState(handler.getGame().menuState);
+        uiManager.addObjects(new UIImageButton(handler.getWidth()/2-340, handler.getHeight()/2-100, 128, 64, Images.Options, new ClickListlener()  {// (Anthony)
+        	@Override																															   // 
+        	public void onClick() {																												   // 
+            	handler.getMusicManager().playMusic("/music/configSFX.wav"); //(Anthony) sonido en el boton "Options"							   // 
+        		handler.getMouseManager().setUimanager(null);																					   
+                State.setState(handler.getGame().menuState);																					   
+        	}
         }));
-
-        uiManager.addObjects(new UIImageButton(56, (223+(64+16))+(64+16), 128, 64, Images.BTitle, () -> {
-            handler.getMouseManager().setUimanager(null);
-            State.setState(handler.getGame().menuState);
+        
+        uiManager.addObjects(new UIImageButton(handler.getWidth()/2-340, handler.getHeight()/2-20, 128, 64, Images.BTitle, new ClickListlener()  {// (Anthony)
+        	@Override																															   // 
+        	public void onClick() {																												   // 
+            	handler.getMusicManager().playMusic("/music/TitleSFX.wav"); //(Anthony) sonido en el boton "BTitle"							   	   // 
+        		handler.getMouseManager().setUimanager(null);																					   
+                State.setState(handler.getGame().menuState);																					   
+        	}
         }));
-
-
-
-
 
     }
 
@@ -61,7 +70,7 @@ public class PauseState extends State {
     @Override
     public void render(Graphics g) {
         g.drawImage(Images.Pause,0,0,handler.getWidth(),handler.getHeight(),null);//cambiar el size del display
-        																	 //para que asi cubra el "window"
+        																	 //para que asi cubra el "window" (alondra)
         uiManager.Render(g);
 
     }

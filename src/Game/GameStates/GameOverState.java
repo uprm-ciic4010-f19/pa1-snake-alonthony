@@ -26,10 +26,12 @@ public class GameOverState extends State {
 
         uiManager.addObjects(new UIImageButton(handler.getWidth()/2-64, handler.getHeight()/1-275, 128, 60, Images.butrestart, new ClickListlener() {
             @Override
-            public void onClick() {
+            public void onClick() {     
+            	handler.getMusicManager().playMusic("/music/restartSoundFX.wav"); //(Anthony) sonido en el boton "restart"
                 handler.getMouseManager().setUimanager(null);
                 handler.getGame().reStart();
                 State.setState(handler.getGame().gameState);
+
             }
         }));
         
@@ -49,6 +51,7 @@ public class GameOverState extends State {
             count=0;
 
             State.setState(handler.getGame().gameState);
+
         }
 
 

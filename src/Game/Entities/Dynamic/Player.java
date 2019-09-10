@@ -89,8 +89,10 @@ public class Player {
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te agrega un segmento de la cola (Alondra)
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
         	length++;
+
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego (Alondra)
         	Game.GameStates.State.setState(handler.getGame().pauseState);
+
                	
 	   /**
 		* (Anthony) - En el siguiente codigo implemento los comandos de "+" y "-" para
@@ -146,7 +148,6 @@ public class Player {
                 break;
         }
         handler.getWorld().playerLocation[xCoord][yCoord]=true;
-
         
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
         	Eat();
@@ -168,7 +169,8 @@ public class Player {
     				if (i != handler.getWorld().body.size() -1) {
     					Game.GameStates.State.setState(handler.getGame().gameoverState); //llamando al state game over para cuando 
     																					//choque diga "Game over (Alondra)
-    					handler.getGame().getMusicManager().playMusic("/music/gameOverSound.wav");//(anthony) invoca sonido de Game Over    					
+    					handler.getGame().getMusicManager().playMusic("/music/gameOverFX.wav");//(anthony) invoca sonido de Game Over    
+
     				}
     			}
             }
@@ -180,7 +182,7 @@ public class Player {
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
             	
-            	g.setFont(new Font("Comic Sans MS", Font.PLAIN , 19)); //(Anthony) cambie el font
+            	g.setFont(new Font("Comic Sans MS", Font.BOLD , 20)); //(Anthony) cambie el font
             	g.setColor(Color.WHITE); //color del texto (Alondra)
             	g.drawString("Score: "+currScore,20, 20); //proyecta el score en el juego (Alondra)  
             	g.drawString("Length: "+length, 690, 20); //(anthony) demuestra el length de la serpiente
@@ -196,7 +198,7 @@ public class Player {
                 	//break;
                 	//}else{
                 	//currScore--;
-
+                 
                 }
 
                 //g.setColor(Color.BLACK);
@@ -318,6 +320,7 @@ public class Player {
         }
         handler.getWorld().body.addLast(tail);
         handler.getWorld().playerLocation[tail.x][tail.y] = true;
+        
     }
 
     public void kill(){
