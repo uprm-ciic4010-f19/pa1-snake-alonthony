@@ -115,6 +115,7 @@ public class Player {
         	case "Left":
         		if(xCoord==0){
         			xCoord = handler.getWorld().GridWidthHeightPixelCount-1;
+        			handler.getGame().getMusicManager().playMusic("/music/teleportFX4.wav");
                 }else{
         			xCoord--;
                 }
@@ -122,6 +123,7 @@ public class Player {
             case "Right":
                 if(xCoord==handler.getWorld().GridWidthHeightPixelCount-1){
                     xCoord = 0;
+                    handler.getGame().getMusicManager().playMusic("/music/teleportFX2.wav");
                 }else{
                     xCoord++;
                 }
@@ -129,6 +131,7 @@ public class Player {
             case "Up":
                 if(yCoord==0){
                     yCoord = handler.getWorld().GridWidthHeightPixelCount-1;
+                    handler.getGame().getMusicManager().playMusic("/music/teleportFX3.wav");
                 }else{
                     yCoord--;
                 }
@@ -136,6 +139,7 @@ public class Player {
             case "Down":
                 if(yCoord==handler.getWorld().GridWidthHeightPixelCount-1){
                     yCoord = 0;
+                    handler.getGame().getMusicManager().playMusic("/music/teleportFX1.wav");
                 }else{
                     yCoord++;
                 }
@@ -208,7 +212,6 @@ public class Player {
     	//moveCounter = moveCounter + 5;
         length++;
         Tail tail= null;
-        
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
         handler.getWorld().appleOnBoard=false;
         
