@@ -4,17 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Random;
-
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 import Main.Handler;
 
@@ -38,13 +28,6 @@ public class Player {
     public String direction;//is your first name one?
 	private double currScore; 
 	public Graphics g;
-	
-	//Res.music
-    private InputStream audioFile;
-    private AudioInputStream audioStream;
-    private AudioFormat format;
-    private DataLine.Info info;
-    private Clip audioClip;
 	
 	public Player(Handler handler){
         this.handler = handler;
@@ -181,21 +164,7 @@ public class Player {
     				if (i != handler.getWorld().body.size() -1) {
     					Game.GameStates.State.setState(handler.getGame().gameoverState); //llamando al state game over para cuando 
     																					//choque diga "Game over (Alondra)
-    					try {
-    						audioFile = getClass().getResourceAsStream("/music/gameOverSound.wav"); //(Anthony) 
-    						audioStream = AudioSystem.getAudioInputStream(audioFile);			 	//Game Over
-    						format = audioStream.getFormat();										//Sound Effect
-    						info = new DataLine.Info(Clip.class, format);							
-    						audioClip = (Clip) AudioSystem.getLine(info);					 		
-    						audioClip.open(audioStream);									 		
-    						audioClip.loop(0);  													
-    					} catch (UnsupportedAudioFileException e) {									
-    						e.printStackTrace();													
-    					} catch (IOException e) {													
-    						e.printStackTrace();													
-    					} catch (LineUnavailableException e) {										
-    						e.printStackTrace();													
-    					}
+    					handler.getGame().getMusicManager().playMusic("/music/gameOverSound.wav");//(anthony) invoca sonido de Game Over    					
     				}
     			}
             }

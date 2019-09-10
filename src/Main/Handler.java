@@ -3,7 +3,7 @@ package Main;
 import Input.KeyManager;
 import Input.MouseManager;
 import Worlds.WorldBase;
-
+import Input.MusicManager; //(anthony) implemented a new music manager
 
 /**
  * Created by AlexVR on 7/1/2018.
@@ -50,5 +50,7 @@ public class Handler {
     public void setWorld(WorldBase world) {
         this.world = world;
     }
-    
+    public MusicManager getMusicManager() { // (anthony)
+    	return game.getMusicManager();      //
+    }										//
 }

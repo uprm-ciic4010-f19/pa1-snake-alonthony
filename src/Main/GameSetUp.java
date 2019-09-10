@@ -8,6 +8,7 @@ import Game.GameStates.PauseState;
 import Game.GameStates.State;
 import Input.KeyManager;
 import Input.MouseManager;
+import Input.MusicManager; //(anthony) imported con los managers
 import Resources.Images;
 
 import javax.sound.sampled.*;
@@ -38,7 +39,8 @@ public class GameSetUp implements Runnable {
     //Input
     private KeyManager keyManager;
     private MouseManager mouseManager;
-
+    private MusicManager musicManager; // (anthony) - implemented new music manager
+    
     //Handler
     private Handler handler;
 
@@ -64,7 +66,7 @@ public class GameSetUp implements Runnable {
         this.title = title;
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
-
+        musicManager = new MusicManager(); //(anthony)
     }
 
     private void init(){
@@ -207,7 +209,11 @@ public class GameSetUp implements Runnable {
     public MouseManager getMouseManager(){
         return mouseManager;
     }
-
+    
+    public MusicManager getMusicManager(){ // (Anthony)
+    	return musicManager;			   //	
+    }									   //
+    
     public int getWidth(){
         return width;
     }
