@@ -92,7 +92,7 @@ public class GameSetUp implements Runnable {
 
         try {
 
-            audioFile = getClass().getResourceAsStream("/music/hardRock.wav"); //(Anthony) music change
+            audioFile = getClass().getResourceAsStream("/music/gameSongElectronica.wav"); //(Anthony) music change
             audioStream = AudioSystem.getAudioInputStream(audioFile);
             format = audioStream.getFormat();
             info = new DataLine.Info(Clip.class, format);
