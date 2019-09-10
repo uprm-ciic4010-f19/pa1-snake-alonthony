@@ -148,7 +148,6 @@ public class Player {
                 break;
         }
         handler.getWorld().playerLocation[xCoord][yCoord]=true;
-        
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
         	Eat();
         	currScore += Math.sqrt(2*currScore+1);//cuando coma la manzana enseñe el score (Alondra)
@@ -185,7 +184,7 @@ public class Player {
             	g.setFont(new Font("Comic Sans MS", Font.BOLD , 20)); //(Anthony) cambie el font
             	g.setColor(Color.WHITE); //color del texto (Alondra)
             	g.drawString("Score: "+currScore,20, 20); //proyecta el score en el juego (Alondra)  
-            	g.drawString("Length: "+length, 690, 20); //(anthony) demuestra el length de la serpiente
+            	g.drawString("Length: "+length, 670, 20); //(anthony) demuestra el length de la serpiente
             	
             	g.setColor(Color.GREEN); // (Anthony) cambie el color del snake de .WHITE a .GREEN
                 if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){
@@ -208,10 +207,30 @@ public class Player {
 
 
     }
-
+    static Boolean ifRunning = false; // (anthony) boolean para verificar que Eat() se esta ejecutando
     public void Eat(){
     	speedManager -= 1; // (anthony) add speed when the snake eats
     	//moveCounter = moveCounter + 5;
+    	try { // (anthony) en el siguiente try / except implemento sonidos para cuando la serpiente coma
+    		ifRunning = true;
+    		switch (direction) {
+			case "Left":
+	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX1.wav");		
+				break;
+			case "Right":
+	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX3.wav");		
+				break;
+			case "Up":
+	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX2.wav");		
+				break;
+			case "Down":
+	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX4.wav");		
+				break;
+			default:
+				break;
+			}
+		} finally {
+					}
         length++;
         Tail tail= null;
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
