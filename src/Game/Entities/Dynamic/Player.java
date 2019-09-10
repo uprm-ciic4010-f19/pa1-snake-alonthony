@@ -41,15 +41,12 @@ public class Player {
         currScore = 0; //variable para "store" los puntos despues que coma la manzana (Alondra)
         
     }
-
 	public void tick(){
         moveCounter += 1;
-       // speedManager += 1;
-        if(moveCounter >= speedManager) { // (Anthony) agregue variable para iterar la velocidad
+               if(moveCounter >= speedManager) { // (Anthony) agregue variable para iterar la velocidad
             checkCollisionAndMove();
             moveCounter = 0; 
-           // speedManager;
-        	
+                   	
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)){
             if (!direction.equals("Down")) {
             	direction = "Up";
@@ -92,7 +89,6 @@ public class Player {
 
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego (Alondra)
         	Game.GameStates.State.setState(handler.getGame().pauseState);
-
                	
 	   /**
 		* (Anthony) - En el siguiente codigo implemento los comandos de "+" y "-" para
@@ -183,7 +179,7 @@ public class Player {
             	
             	g.setFont(new Font("Comic Sans MS", Font.BOLD , 20)); //(Anthony) cambie el font
             	g.setColor(Color.WHITE); //color del texto (Alondra)
-            	g.drawString("Score: "+currScore,20, 20); //proyecta el score en el juego (Alondra)  
+            	g.drawString("Score: "+(int)currScore,20, 20); //proyecta el score en el juego (Alondra)  
             	g.drawString("Length: "+length, 670, 20); //(anthony) demuestra el length de la serpiente
             	
             	g.setColor(Color.GREEN); // (Anthony) cambie el color del snake de .WHITE a .GREEN
@@ -209,9 +205,17 @@ public class Player {
     }
     static Boolean ifRunning = false; // (anthony) boolean para verificar que Eat() se esta ejecutando
     public void Eat(){
-    	speedManager -= 1; // (anthony) add speed when the snake eats
-    	//moveCounter = moveCounter + 5;
-    	try { // (anthony) en el siguiente try / except implemento sonidos para cuando la serpiente coma
+    	speedManager -= 1; // (Anthony). el ultimo digito de mi numero de estudiante es 4, por lo que se supone que
+    					   // aumentara la velocidad en un factor de 5 unidades; sin embargo, sumarle dicha cantidad
+    					   // hace ineficiente la funcion de aumentar la velocidad cuando la serpiente come. cabe
+    					   // destacar que tenemos el consentimiento del asistente de catedra Andres Chamorro para
+    					   // dejar los valores como se encuentran presentes.
+    	
+    	/*
+    	 * (anthony) en el siguiente try / except implemente
+    	 *  sonidos en los casos cuando la serpiente coma
+    	 */
+    	try { 
     		ifRunning = true;
     		switch (direction) {
 			case "Left":
@@ -236,8 +240,6 @@ public class Player {
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
         handler.getWorld().appleOnBoard=false;
         
-    	
-    	
         switch (direction){
             case "Left":
                 if( handler.getWorld().body.isEmpty()){
@@ -258,10 +260,8 @@ public class Player {
                             tail=new Tail(handler.getWorld().body.getLast().x,this.yCoord-1,handler);
                         }else{
                             tail=new Tail(handler.getWorld().body.getLast().x,this.yCoord+1,handler);
-
                         }
                     }
-
                 }
                 break;
             case "Right":
@@ -285,7 +285,6 @@ public class Player {
                             tail=(new Tail(handler.getWorld().body.getLast().x,this.yCoord+1,handler));
                         }
                     }
-
                 }
                 break;
             case "Up":
@@ -338,8 +337,7 @@ public class Player {
                 break;
         }
         handler.getWorld().body.addLast(tail);
-        handler.getWorld().playerLocation[tail.x][tail.y] = true;
-        
+        handler.getWorld().playerLocation[tail.x][tail.y] = true; 
     }
 
     public void kill(){
