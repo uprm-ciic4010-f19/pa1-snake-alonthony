@@ -9,12 +9,50 @@ public class Apple {
 
     public int xCoord;
     public int yCoord;
+    public int goodcounter=0;
+    
+       // public void tick() {
+        //	    goodcounter += 1;
+          //   if(goodcounter >= 10) { // (Anthony) agregue variable para iterar la velocidad
+            //     goodcounter = 0;  
+              //   changeColor(Color.BLACK);
+        	//}
+           
+       // }
+        
+   
+   // private void changeColor(Color black) {
+			// TODO Auto-generated method stub
+			
+	//	}
 
+
+	//
+    
+	//public static void isGood(){
+    	//if (equals(Color.WHITE)){
+    		//true;
+    		//System.out.println("Its good");
+    		
+		//}else {
+			//false;
+			//System.out.println("Ew");
+			//}
+    //}
+    
+    
     
     public Apple(Handler handler,int x, int y){
+    	
         this.xCoord=x;
         this.yCoord=y;
     }
+
+
+	
+
+
+	
 
 
 }

@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
+import Game.Entities.Static.Apple;
 import Main.Handler;
 
 
@@ -188,28 +189,45 @@ public class Player {
             	g.drawString("Length: "+length, 690, 20); //(anthony) demuestra el length de la serpiente
             	
             	g.setColor(Color.GREEN); // (Anthony) cambie el color del snake de .WHITE a .GREEN
-                if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){
+                if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){     	
                     g.fillRect((i*handler.getWorld().GridPixelsize),
                             (j*handler.getWorld().GridPixelsize),
                             handler.getWorld().GridPixelsize,
+                            handler.getWorld().GridPixelsize);              
+                    }
+                
+                g.setColor(Color.WHITE); //cambiar el color de la manzana (Alondra)
+                if(handler.getWorld().appleLocation[i][j]){     	
+                    g.fillRect((i*handler.getWorld().GridPixelsize),
+                    		(j*handler.getWorld().GridPixelsize),
+                            handler.getWorld().GridPixelsize,
                             handler.getWorld().GridPixelsize);
+                    //if (Apple.isGood(g.setColor(Color.WHITE))) {
+						
+					//}
                     
-                    //if(handler.getWorld().isGood(appleLocation[i][j])){
-                	//break;
-                	//}else{
-                	//currScore--;
-                 
                 }
-
-                //g.setColor(Color.BLACK);
-                //handler.getWorld().appleLocation;
+               
             }
         }
 
 
     }
 
-    public void Eat(){
+   
+
+	public void Eat(){
+		//switch (Apple.isGood(handler.getWorld().appleLocation[xCoord][yCoord])) {
+		//case true:
+			//continue;
+			//break;
+
+		//default:
+			//currScore=- Math.sqrt(2*currScore+1);
+			//handler.getWorld().body.remove((new Tail(xCoord, yCoord, handler)));
+			//length--;
+			//break;
+		//}
     	speedManager -= 1; // (anthony) add speed when the snake eats
     	//moveCounter = moveCounter + 5;
         length++;
