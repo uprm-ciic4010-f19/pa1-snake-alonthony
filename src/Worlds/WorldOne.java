@@ -26,6 +26,7 @@ public class WorldOne extends WorldBase{
     public void tick() {
         super.tick();
         player.tick();
+        //apple.tick();
         if(!appleOnBoard){
             appleOnBoard=true;
             int appleX = new Random().nextInt(handler.getWorld().GridWidthHeightPixelCount-1);
@@ -49,6 +50,7 @@ public class WorldOne extends WorldBase{
     public void render(Graphics g){
         super.render(g);
         player.render(g,playerLocation);
+        
     }
 
 }

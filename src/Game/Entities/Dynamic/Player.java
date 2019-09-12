@@ -196,11 +196,22 @@ public class Player {
             	g.drawString("Length: "+length, 645, 20); //(anthony) demuestra el length de la serpiente
             	
             	g.setColor(Color.GREEN); // (Anthony) cambie el color del snake de .WHITE a .GREEN
-                if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){
+                if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){     	
                     g.fillRect((i*handler.getWorld().GridPixelsize),
                             (j*handler.getWorld().GridPixelsize),
                             handler.getWorld().GridPixelsize,
+                            handler.getWorld().GridPixelsize);              
+                    }
+                
+                g.setColor(Color.WHITE); //cambiar el color de la manzana (Alondra)
+                if(handler.getWorld().appleLocation[i][j]){     	
+                    g.fillRect((i*handler.getWorld().GridPixelsize),
+                    		(j*handler.getWorld().GridPixelsize),
+                            handler.getWorld().GridPixelsize,
                             handler.getWorld().GridPixelsize);
+                    //if (Apple.isGood(g.setColor(Color.WHITE))) {
+						
+					//}
                     
                     //if(handler.getWorld().isGood(appleLocation[i][j])){
                 	//break;
@@ -222,8 +233,35 @@ public class Player {
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
         handler.getWorld().appleOnBoard=false;
     }
+
+
+   
+
+
+		//default:
+			//currScore=- Math.sqrt(2*currScore+1);
+			//handler.getWorld().body.remove((new Tail(xCoord, yCoord, handler)));
+			//length--;
+			//break;
+		//}
+    
+    
+
+	//public void Eat(){
+		//switch (Apple.isGood(handler.getWorld().appleLocation[xCoord][yCoord])) {
+		//case true:
+			//continue;
+			//break;
+
+		//default:
+			//currScore=- Math.sqrt(2*currScore+1);
+			//handler.getWorld().body.remove((new Tail(xCoord, yCoord, handler)));
+			//length--;
+			//break;
+		//}
+    
     public void Eat(){
-    	speedRegulator -= 1; // (Anthony). el ultimo digito de mi numero de estudiante es 4, por lo que se supone que
+    	//speedRegulator -= 1; // (Anthony). el ultimo digito de mi numero de estudiante es 4, por lo que se supone que
     					   // aumentara la velocidad en un factor de 5 unidades; sin embargo, sumarle dicha cantidad
     					   // hace ineficiente la funcion de aumentar la velocidad cuando la serpiente come. cabe
     					   // destacar que tenemos el consentimiento del asistente de catedra Andres Chamorro para
@@ -233,7 +271,10 @@ public class Player {
     	 * (anthony) en el siguiente try / except implemente
     	 *  sonidos en los casos cuando la serpiente coma
     	 */
-    	try { 
+//    	try { // (anthony) en el siguiente try / except implemento sonidos para cuando la serpiente coma
+//    		justAte = true;
+//    	speedManager -= 1; // (anthony) add speed when the snake eats
+    	    	try { // (anthony) en el siguiente try / except implemento sonidos para cuando la serpiente coma
     		justAte = true;
     		switch (direction) {
 			case "Left":
