@@ -23,7 +23,7 @@ public class Apple {
              if(goodcounter >= 10) { // (Anthony) agregue variable para iterar la velocidad
                  goodcounter = 0;
                  this.good=false;
-                 color = Color.BLACK;
+                 
         	}
            
         }

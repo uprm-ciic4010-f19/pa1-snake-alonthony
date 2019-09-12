@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.util.Random;
 
+import Game.Entities.Static.Apple;
 import Main.Handler;
 
 
@@ -88,21 +89,12 @@ public class Player {
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te agrega un segmento de la cola (Alondra)
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
         	length++;
-        	currScore+= Math.sqrt(2 * currScore + 1);
+        	
         	        
         //Debugging key "Y" para probar las funciones de lo que pasaria si comes un rotten apple
-        }if (length > 1 && currScore > 0) {
-        	if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_Y)) {
-        		handler.getWorld().body.removeLast();
-        		length--;
-            	currScore+= Math.sqrt(2 * currScore + 1);
-        		speedRegulator += 1;
-    			currScore -= Math.sqrt(2*currScore+1);
-        		if (currScore <= 0) {
-        			currScore = 0;
-        		}
-        	}
-        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego (Alondra)
+        }
+        
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego (Alondra)
         	Game.GameStates.State.setState(handler.getGame().pauseState);
                	
 	   /**
@@ -205,7 +197,25 @@ public class Player {
                     }
                 
                 g.setColor(Color.WHITE); //cambiar el color de la manzana (Alondra)
-                if(handler.getWorld().appleLocation[i][j]){     	
+                if(handler.getWorld().appleLocation[i][j]){ 
+                	
+                	if (length > 1 && currScore > 0) {
+                    	if(handler.getWorld().getApple().isGood()) {
+                    		g.setColor(Color.BLACK);
+                        	currScore+= Math.sqrt(2 * currScore + 1);
+                    		speedRegulator += 1;
+                    		
+                    	}else{
+                    			currScore -= Math.sqrt(2*currScore+1);
+                    			length--;
+                    			handler.getWorld().body.removeLast();
+                    			
+                    			//if (currScore <= 0) {
+                    			//currScore = 0;
+                    		//}
+                    	}
+                    }
+                	
                     g.fillRect((i*handler.getWorld().GridPixelsize),
                     		(j*handler.getWorld().GridPixelsize),
                             handler.getWorld().GridPixelsize,
@@ -214,8 +224,6 @@ public class Player {
                     
                 }
 
-                //g.setColor(Color.BLACK);
-                //handler.getWorld().appleLocation;
             }
         }
     }
@@ -230,17 +238,6 @@ public class Player {
     }
 
 
-		//default:
-			//currScore=- Math.sqrt(2*currScore+1);
-			//handler.getWorld().body.remove((new Tail(xCoord, yCoord, handler)));
-			//length--;
-			//break;
-		//}
-
-	//public void Eat(){
-
-
-
     public void Eat(){
     	speedRegulator -= 0.75; // (Anthony). el ultimo digito de mi numero de estudiante es 4, por lo que se supone que
     					   		// aumentara la velocidad en un factor de 5 unidades; sin embargo, sumarle dicha cantidad
@@ -252,6 +249,8 @@ public class Player {
     	 * (anthony) en el siguiente try / except implemente
     	 *  sonidos en los casos cuando la serpiente coma
     	 */
+    	
+    	    	
     	try { 
     		justAte = true;
     		switch (direction) {
