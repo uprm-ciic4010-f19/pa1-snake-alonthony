@@ -88,12 +88,14 @@ public class Player {
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te agrega un segmento de la cola (Alondra)
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
         	length++;
+        	currScore+= Math.sqrt(2 * currScore + 1);
         	        
         //Debugging key "Y" para probar las funciones de lo que pasaria si comes un rotten apple
         }if (length > 1 && currScore > 0) {
         	if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_Y)) {
         		handler.getWorld().body.removeLast();
         		length--;
+            	currScore+= Math.sqrt(2 * currScore + 1);
         		speedRegulator += 1;
     			currScore -= Math.sqrt(2*currScore+1);
         		if (currScore <= 0) {
@@ -182,7 +184,7 @@ public class Player {
             }
         }
     }
-   
+
     public void render(Graphics g,Boolean[][] playeLocation){
         new Random();
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {

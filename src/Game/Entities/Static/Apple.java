@@ -13,6 +13,7 @@ public class Apple {
     public int yCoord;
     public int goodcounter=0;
     public int goodSpeed = 0;
+    
        // public void tick() {
         //	    goodcounter += 1;
           //   if(goodcounter >= goodSpeed) { // (Anthony) agregue variable para iterar la velocidad
