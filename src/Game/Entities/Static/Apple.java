@@ -9,26 +9,15 @@ import Main.Handler;
  */
 public class Apple {
 
-<<<<<<< HEAD
 
 
 
 	public int xCoord;
-=======
-    private Handler handler;
-
-    public int xCoord;
->>>>>>> branch 'master' of https://github.com/uprm-ciic4010-f19/pa1-snake-alonthony.git
     public int yCoord;
     public int goodcounter=0;
-<<<<<<< HEAD
     public Color color;
     public boolean good;
-=======
-    public int goodSpeed = 0;
->>>>>>> branch 'master' of https://github.com/uprm-ciic4010-f19/pa1-snake-alonthony.git
     
-<<<<<<< HEAD
         public void tick() {
         	    goodcounter += 1;
              if(goodcounter >= 10) { // (Anthony) agregue variable para iterar la velocidad
@@ -36,15 +25,6 @@ public class Apple {
                  this.good=false;
                  color = Color.BLACK;
         	}
-=======
-       // public void tick() {
-        //	    goodcounter += 1;
-          //   if(goodcounter >= goodSpeed) { // (Anthony) agregue variable para iterar la velocidad
-    	   //  	checkCollisionAndMove():
-            //     goodcounter = 0;  
-              //   changeColor(Color.BLACK);
-        	//}
->>>>>>> branch 'master' of https://github.com/uprm-ciic4010-f19/pa1-snake-alonthony.git
            
         }
         
@@ -59,7 +39,6 @@ public class Apple {
     
     
     
-<<<<<<< HEAD
     public void setGood(boolean good) {
 		this.good = good;
 	}
@@ -69,10 +48,6 @@ public class Apple {
 
 	public Apple(Handler handler,int x, int y){
     	
-=======
-    public Apple(Handler handler,int x, int y){
-        this.handler=handler;
->>>>>>> branch 'master' of https://github.com/uprm-ciic4010-f19/pa1-snake-alonthony.git
         this.xCoord=x;
         this.yCoord=y;
     }
@@ -85,6 +60,12 @@ public class Apple {
 	public void setColor(Color color) {
 		this.color = color;
 	}
+
+
+	
+
+
+	
 
 
 }
