@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import java.util.Random;
 
-import Game.Entities.Static.Apple;
 import Main.Handler;
 
 
@@ -24,7 +24,7 @@ public class Player {
     public int yCoord;
 
     public int moveCounter; 
-    public int speedManager; //(anthony) variable
+    public double speedRegulator; //(anthony) variable para modificar la velocidad
     
     public String direction;//is your first name one?
 	private double currScore; 
@@ -35,22 +35,20 @@ public class Player {
         xCoord = 0; 
         yCoord = 0; 
         moveCounter = 0; 
-        speedManager = 5; // (anthony) variable nueva
+        speedRegulator = 6; 
         direction= "Right";
         justAte = false;
         length= 1;
         currScore = 0; //variable para "store" los puntos despues que coma la manzana (Alondra)
         
     }
-
 	public void tick(){
-        moveCounter += 1;
-       // speedManager += 1;
-        if(moveCounter >= speedManager) { // (Anthony) agregue variable para iterar la velocidad
-            checkCollisionAndMove();
-            moveCounter = 0; 
-           // speedManager;
-        	
+		moveCounter += 1;
+		if(moveCounter >= speedRegulator) { // (Anthony) agregue variable para iterar la velocidad
+			checkCollisionAndMove();
+			moveCounter = 0; 
+             
+        // Implemented "WASD" keys for easier movement on keyboards with small directional keys
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)){
             if (!direction.equals("Down")) {
             	direction = "Up";
@@ -90,10 +88,22 @@ public class Player {
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te agrega un segmento de la cola (Alondra)
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
         	length++;
-
+        	currScore+= Math.sqrt(2 * currScore + 1);
+        	        
+        //Debugging key "Y" para probar las funciones de lo que pasaria si comes un rotten apple
+        }if (length > 1 && currScore > 0) {
+        	if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_Y)) {
+        		handler.getWorld().body.removeLast();
+        		length--;
+            	currScore+= Math.sqrt(2 * currScore + 1);
+        		speedRegulator += 1;
+    			currScore -= Math.sqrt(2*currScore+1);
+        		if (currScore <= 0) {
+        			currScore = 0;
+        		}
+        	}
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego (Alondra)
         	Game.GameStates.State.setState(handler.getGame().pauseState);
-
                	
 	   /**
 		* (Anthony) - En el siguiente codigo implemento los comandos de "+" y "-" para
@@ -101,12 +111,10 @@ public class Player {
 		*/
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
         	checkCollisionAndMove();
-        	speedManager -= 15;
-        	moveCounter += 10;
+        	speedRegulator -= 0.75; 
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
         	checkCollisionAndMove();
-        	speedManager += 15;
-        	moveCounter -= 10;
+        	speedRegulator += 0.75; 
         }
 	}        	        	       		
         
@@ -152,7 +160,7 @@ public class Player {
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
         	Eat();
         	currScore += Math.sqrt(2*currScore+1);//cuando coma la manzana enseñe el score (Alondra)
-        	//currScore++; (anthony) el score se estaba quedando en los 3.99, lo modifique para arreglarlo
+        	// (anthony) el score se estaba quedando en los 3.99, lo modifique para arreglarlo
 			}
                      
         
@@ -176,7 +184,7 @@ public class Player {
             }
         }
     }
-   
+
     public void render(Graphics g,Boolean[][] playeLocation){
         new Random();
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
@@ -184,8 +192,9 @@ public class Player {
             	
             	g.setFont(new Font("Comic Sans MS", Font.BOLD , 20)); //(Anthony) cambie el font
             	g.setColor(Color.WHITE); //color del texto (Alondra)
-            	g.drawString("Score: "+currScore,20, 20); //proyecta el score en el juego (Alondra)  
-            	g.drawString("Length: "+length, 670, 20); //(anthony) demuestra el length de la serpiente
+            	//(anthony) cambie el formato del score para que solo presente 2 numeros despues del punto
+            	g.drawString("Score: "+new DecimalFormat("##.##").format(currScore),20, 20); //proyecta el score en el juego (Alondra)  
+            	g.drawString("Length: "+length, 645, 20); //(anthony) demuestra el length de la serpiente
             	
             	g.setColor(Color.GREEN); // (Anthony) cambie el color del snake de .WHITE a .GREEN
                 if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){     	
@@ -204,50 +213,70 @@ public class Player {
                     
                     
                 }
-               
+
+                //g.setColor(Color.BLACK);
+                //handler.getWorld().appleLocation;
             }
         }
+    }
 
-
+    public void EatRottenApple() {
+    	handler.getWorld().body.removeLast();
+    	speedRegulator += 0.75;
+    	length --;
+    //	handler.getWorld().playerLocation[handler.getWorld().body.isEmpty()][]
+        handler.getWorld().appleLocation[xCoord][yCoord]=false;
+        handler.getWorld().appleOnBoard=false;
     }
 
 
-   
+		//default:
+			//currScore=- Math.sqrt(2*currScore+1);
+			//handler.getWorld().body.remove((new Tail(xCoord, yCoord, handler)));
+			//length--;
+			//break;
+		//}
 
-	
+	//public void Eat(){
 
-    static Boolean ifRunning = false; // (anthony) boolean para verificar que Eat() se esta ejecutando
+
+
     public void Eat(){
-
-    	speedManager -= 1; // (anthony) add speed when the snake eats
-    	//moveCounter = moveCounter + 5;
-    	try { // (anthony) en el siguiente try / except implemento sonidos para cuando la serpiente coma
-    		ifRunning = true;
+    	speedRegulator -= 0.75; // (Anthony). el ultimo digito de mi numero de estudiante es 4, por lo que se supone que
+    					   		// aumentara la velocidad en un factor de 5 unidades; sin embargo, sumarle dicha cantidad
+    							// hace ineficiente la funcion de aumentar la velocidad cuando la serpiente come. cabe
+    							// destacar que tenemos el consentimiento del asistente de catedra Andres Chamorro para
+    							// dejar los valores como se encuentran presentes.
+    	
+    	/*
+    	 * (anthony) en el siguiente try / except implemente
+    	 *  sonidos en los casos cuando la serpiente coma
+    	 */
+    	try { 
+    		justAte = true;
     		switch (direction) {
-			case "Left":
-	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX1.wav");		
-				break;
-			case "Right":
-	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX3.wav");		
-				break;
-			case "Up":
-	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX2.wav");		
-				break;
-			case "Down":
-	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX4.wav");		
-				break;
-			default:
-				break;
-			}
-		} finally {
-					}
+    		case "Left":
+    			handler.getGame().getMusicManager()	.playMusic("/music/eatFX4.wav");		
+    			break;
+    		case "Right":
+    			handler.getGame().getMusicManager()	.playMusic("/music/eatFX3.wav");		
+    			break;
+    		case "Up":
+    			handler.getGame().getMusicManager()	.playMusic("/music/eatFX1.wav");		
+    			break;
+    		case "Down":
+    			handler.getGame().getMusicManager()	.playMusic("/music/eatFX2.wav");		
+    			break;
+    		default:
+    			break;
+    		}
+    	} finally {
+    	}
         length++;
         Tail tail= null;
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
         handler.getWorld().appleOnBoard=false;
         
-    	
-    	
         switch (direction){
             case "Left":
                 if( handler.getWorld().body.isEmpty()){
@@ -268,10 +297,8 @@ public class Player {
                             tail=new Tail(handler.getWorld().body.getLast().x,this.yCoord-1,handler);
                         }else{
                             tail=new Tail(handler.getWorld().body.getLast().x,this.yCoord+1,handler);
-
                         }
                     }
-
                 }
                 break;
             case "Right":
@@ -295,7 +322,6 @@ public class Player {
                             tail=(new Tail(handler.getWorld().body.getLast().x,this.yCoord+1,handler));
                         }
                     }
-
                 }
                 break;
             case "Up":
@@ -348,8 +374,7 @@ public class Player {
                 break;
         }
         handler.getWorld().body.addLast(tail);
-        handler.getWorld().playerLocation[tail.x][tail.y] = true;
-        
+        handler.getWorld().playerLocation[tail.x][tail.y] = true; 
     }
 
     public void kill(){
