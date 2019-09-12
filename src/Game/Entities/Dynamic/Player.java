@@ -212,11 +212,11 @@ public class Player {
 
 
     }
-<<<<<<< HEAD
+
 
    
 
-	public void Eat(){
+	
 		//switch (Apple.isGood(handler.getWorld().appleLocation[xCoord][yCoord])) {
 		//case true:
 			//continue;
@@ -228,10 +228,10 @@ public class Player {
 			//length--;
 			//break;
 		//}
-=======
+
     static Boolean ifRunning = false; // (anthony) boolean para verificar que Eat() se esta ejecutando
     public void Eat(){
->>>>>>> branch 'master' of https://github.com/uprm-ciic4010-f19/pa1-snake-alonthony.git
+
     	speedManager -= 1; // (anthony) add speed when the snake eats
     	//moveCounter = moveCounter + 5;
     	try { // (anthony) en el siguiente try / except implemento sonidos para cuando la serpiente coma
