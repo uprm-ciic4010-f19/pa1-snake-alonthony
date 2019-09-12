@@ -201,9 +201,7 @@ public class Player {
                     		(j*handler.getWorld().GridPixelsize),
                             handler.getWorld().GridPixelsize,
                             handler.getWorld().GridPixelsize);
-                    //if (Apple.isGood(g.setColor(Color.WHITE))) {
-						
-					//}
+                    
                     
                 }
                
@@ -217,17 +215,6 @@ public class Player {
    
 
 	
-		//switch (Apple.isGood(handler.getWorld().appleLocation[xCoord][yCoord])) {
-		//case true:
-			//continue;
-			//break;
-
-		//default:
-			//currScore=- Math.sqrt(2*currScore+1);
-			//handler.getWorld().body.remove((new Tail(xCoord, yCoord, handler)));
-			//length--;
-			//break;
-		//}
 
     static Boolean ifRunning = false; // (anthony) boolean para verificar que Eat() se esta ejecutando
     public void Eat(){
