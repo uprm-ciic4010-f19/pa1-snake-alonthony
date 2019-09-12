@@ -24,7 +24,7 @@ public class Player {
     public int yCoord;
 
     public int moveCounter; 
-    public int speedRegulator; //(anthony) variable para modificar la velocidad
+    public double speedRegulator; //(anthony) variable para modificar la velocidad
     
     public String direction;//is your first name one?
 	private double currScore; 
@@ -35,7 +35,7 @@ public class Player {
         xCoord = 0; 
         yCoord = 0; 
         moveCounter = 0; 
-        speedRegulator = 7; 
+        speedRegulator = 6; 
         direction= "Right";
         justAte = false;
         length= 1;
@@ -88,8 +88,7 @@ public class Player {
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te agrega un segmento de la cola (Alondra)
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
         	length++;
-        	currScore += Math.sqrt(2*currScore+1);
-        
+        	        
         //Debugging key "Y" para probar las funciones de lo que pasaria si comes un rotten apple
         }if (length > 1 && currScore > 0) {
         	if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_Y)) {
@@ -98,7 +97,7 @@ public class Player {
         		speedRegulator += 1;
     			currScore -= Math.sqrt(2*currScore+1);
         		if (currScore <= 0) {
-        			currScore = Math.abs(currScore);
+        			currScore = 0;
         		}
         	}
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego (Alondra)
@@ -110,10 +109,10 @@ public class Player {
 		*/
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
         	checkCollisionAndMove();
-        	speedRegulator -= 1; 
+        	speedRegulator -= 0.75; 
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
         	checkCollisionAndMove();
-        	speedRegulator += 1; 
+        	speedRegulator += 0.75; 
         }
 	}        	        	       		
         
@@ -227,16 +226,12 @@ public class Player {
     }
     public void EatRottenApple() {
     	handler.getWorld().body.removeLast();
-    	speedRegulator += 1;
+    	speedRegulator += 0.75;
     	length --;
     //	handler.getWorld().playerLocation[handler.getWorld().body.isEmpty()][]
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
         handler.getWorld().appleOnBoard=false;
     }
-
-
-   
-
 
 		//default:
 			//currScore=- Math.sqrt(2*currScore+1);
@@ -244,8 +239,6 @@ public class Player {
 			//length--;
 			//break;
 		//}
-    
-    
 
 	//public void Eat(){
 		//switch (Apple.isGood(handler.getWorld().appleLocation[xCoord][yCoord])) {
@@ -261,39 +254,36 @@ public class Player {
 		//}
     
     public void Eat(){
-    	//speedRegulator -= 1; // (Anthony). el ultimo digito de mi numero de estudiante es 4, por lo que se supone que
-    					   // aumentara la velocidad en un factor de 5 unidades; sin embargo, sumarle dicha cantidad
-    					   // hace ineficiente la funcion de aumentar la velocidad cuando la serpiente come. cabe
-    					   // destacar que tenemos el consentimiento del asistente de catedra Andres Chamorro para
-    					   // dejar los valores como se encuentran presentes.
+    	speedRegulator -= 0.75; // (Anthony). el ultimo digito de mi numero de estudiante es 4, por lo que se supone que
+    					   		// aumentara la velocidad en un factor de 5 unidades; sin embargo, sumarle dicha cantidad
+    							// hace ineficiente la funcion de aumentar la velocidad cuando la serpiente come. cabe
+    							// destacar que tenemos el consentimiento del asistente de catedra Andres Chamorro para
+    							// dejar los valores como se encuentran presentes.
     	
     	/*
     	 * (anthony) en el siguiente try / except implemente
     	 *  sonidos en los casos cuando la serpiente coma
     	 */
-//    	try { // (anthony) en el siguiente try / except implemento sonidos para cuando la serpiente coma
-//    		justAte = true;
-//    	speedManager -= 1; // (anthony) add speed when the snake eats
-    	    	try { // (anthony) en el siguiente try / except implemento sonidos para cuando la serpiente coma
+    	try { 
     		justAte = true;
     		switch (direction) {
-			case "Left":
-	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX4.wav");		
-				break;
-			case "Right":
-	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX3.wav");		
-				break;
-			case "Up":
-	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX1.wav");		
-				break;
-			case "Down":
-	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX2.wav");		
-				break;
-			default:
-				break;
-			}
-		} finally {
-					}
+    		case "Left":
+    			handler.getGame().getMusicManager()	.playMusic("/music/eatFX4.wav");		
+    			break;
+    		case "Right":
+    			handler.getGame().getMusicManager()	.playMusic("/music/eatFX3.wav");		
+    			break;
+    		case "Up":
+    			handler.getGame().getMusicManager()	.playMusic("/music/eatFX1.wav");		
+    			break;
+    		case "Down":
+    			handler.getGame().getMusicManager()	.playMusic("/music/eatFX2.wav");		
+    			break;
+    		default:
+    			break;
+    		}
+    	} finally {
+    	}
         length++;
         Tail tail= null;
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
