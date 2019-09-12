@@ -24,7 +24,7 @@ public class Player {
     public int yCoord;
 
     public int moveCounter; 
-    public int speedManager; //(anthony) variable
+    public int speedRegulator; //(anthony) variable para modificar la velocidad
     
     public String direction;//is your first name one?
 	private double currScore; 
@@ -35,7 +35,7 @@ public class Player {
         xCoord = 0; 
         yCoord = 0; 
         moveCounter = 0; 
-        speedManager = 5; // (anthony) variable nueva
+        speedRegulator = 7; 
         direction= "Right";
         justAte = false;
         length= 1;
@@ -43,10 +43,10 @@ public class Player {
         
     }
 	public void tick(){
-        moveCounter += 1;
-               if(moveCounter >= speedManager) { // (Anthony) agregue variable para iterar la velocidad
-            checkCollisionAndMove();
-            moveCounter = 0; 
+		moveCounter += 1;
+		if(moveCounter >= speedRegulator) { // (Anthony) agregue variable para iterar la velocidad
+			checkCollisionAndMove();
+			moveCounter = 0; 
              
         // Implemented "WASD" keys for easier movement on keyboards with small directional keys
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)){
@@ -89,11 +89,13 @@ public class Player {
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
         	length++;
         	currScore += Math.sqrt(2*currScore+1);
-        	
+        
+        //Debugging key "Y" para probar las funciones de lo que pasaria si comes un rotten apple
         }if (length > 1 && currScore > 0) {
         	if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_Y)) {
         		handler.getWorld().body.removeLast();
         		length--;
+        		speedRegulator += 1;
     			currScore -= Math.sqrt(2*currScore+1);
         		if (currScore <= 0) {
         			currScore = Math.abs(currScore);
@@ -108,12 +110,10 @@ public class Player {
 		*/
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
         	checkCollisionAndMove();
-        	speedManager -= 15;
-        	moveCounter += 10;
+        	speedRegulator -= 1; 
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
         	checkCollisionAndMove();
-        	speedManager += 15;
-        	moveCounter -= 10;
+        	speedRegulator += 1; 
         }
 	}        	        	       		
         
@@ -214,9 +214,16 @@ public class Player {
             }
         }
     }
-    
+    public void EatRottenApple() {
+    	handler.getWorld().body.removeLast();
+    	speedRegulator += 1;
+    	length --;
+    //	handler.getWorld().playerLocation[handler.getWorld().body.isEmpty()][]
+        handler.getWorld().appleLocation[xCoord][yCoord]=false;
+        handler.getWorld().appleOnBoard=false;
+    }
     public void Eat(){
-    	speedManager -= 1; // (Anthony). el ultimo digito de mi numero de estudiante es 4, por lo que se supone que
+    	speedRegulator -= 1; // (Anthony). el ultimo digito de mi numero de estudiante es 4, por lo que se supone que
     					   // aumentara la velocidad en un factor de 5 unidades; sin embargo, sumarle dicha cantidad
     					   // hace ineficiente la funcion de aumentar la velocidad cuando la serpiente come. cabe
     					   // destacar que tenemos el consentimiento del asistente de catedra Andres Chamorro para
