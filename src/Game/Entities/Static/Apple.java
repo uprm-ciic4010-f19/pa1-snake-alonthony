@@ -1,5 +1,7 @@
 package Game.Entities.Static;
 
+import java.awt.Color;
+
 import Main.Handler;
 
 /**
@@ -7,46 +9,57 @@ import Main.Handler;
  */
 public class Apple {
 
-    public int xCoord;
+
+
+
+	public int xCoord;
     public int yCoord;
     public int goodcounter=0;
+    public Color color;
+    public boolean good;
     
-       // public void tick() {
-        //	    goodcounter += 1;
-          //   if(goodcounter >= 10) { // (Anthony) agregue variable para iterar la velocidad
-            //     goodcounter = 0;  
-              //   changeColor(Color.BLACK);
-        	//}
+        public void tick() {
+        	    goodcounter += 1;
+             if(goodcounter >= 10) { // (Anthony) agregue variable para iterar la velocidad
+                 goodcounter = 0;
+                 this.good=false;
+                 color = Color.BLACK;
+        	}
            
-       // }
+        }
         
    
-   // private void changeColor(Color black) {
-			// TODO Auto-generated method stub
-			
-	//	}
-
+  
 
 	//
     
-	//public static void isGood(){
-    	//if (equals(Color.WHITE)){
-    		//true;
-    		//System.out.println("Its good");
-    		
-		//}else {
-			//false;
-			//System.out.println("Ew");
-			//}
-    //}
+	public boolean isGood(){
+		return this.good;
+    }
     
     
     
-    public Apple(Handler handler,int x, int y){
+    public void setGood(boolean good) {
+		this.good = good;
+	}
+
+
+
+
+	public Apple(Handler handler,int x, int y){
     	
         this.xCoord=x;
         this.yCoord=y;
     }
+    
+
+    public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
 
 
 	
