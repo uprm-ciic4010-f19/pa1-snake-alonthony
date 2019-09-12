@@ -55,7 +55,10 @@ public abstract class WorldBase {
 
         for (int i = 0; i <= 800; i = i + GridPixelsize) {
 
-            g.setColor(new Color(0, 0, 0, 0)); // (ANTHONY) cambie el color de .black a los valores transparentes.
+            g.setColor(new Color(128, 0, 128)); // (ANTHONY) habia cambiado el color de .black a los valores rgba
+            								    // transparentes new Color (0, 0, 0, 0), pero esto causaba que el
+            								    // codigo/juego corriera con menos fluidez, por lo que lo cambie 
+            								    // a los colores del background (violeta)
             g.drawLine(0, i, handler.getWidth() , i);
             g.drawLine(i,0,i,handler.getHeight());
 

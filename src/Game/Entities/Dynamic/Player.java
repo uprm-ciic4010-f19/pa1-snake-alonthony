@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import java.util.Random;
 
 import Main.Handler;
@@ -46,7 +47,8 @@ public class Player {
                if(moveCounter >= speedManager) { // (Anthony) agregue variable para iterar la velocidad
             checkCollisionAndMove();
             moveCounter = 0; 
-                   	
+             
+        // Implemented "WASD" keys for easier movement on keyboards with small directional keys
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)){
             if (!direction.equals("Down")) {
             	direction = "Up";
@@ -86,7 +88,17 @@ public class Player {
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te agrega un segmento de la cola (Alondra)
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
         	length++;
-
+        	currScore += Math.sqrt(2*currScore+1);
+        	
+        }if (length > 1 && currScore > 0) {
+        	if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_Y)) {
+        		handler.getWorld().body.remove();
+        		length--;
+    			currScore -= Math.sqrt(2*currScore+1);
+        		if (currScore <= 0) {
+        			currScore = Math.abs(currScore);
+        		}
+        	}
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego (Alondra)
         	Game.GameStates.State.setState(handler.getGame().pauseState);
                	
@@ -147,7 +159,7 @@ public class Player {
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
         	Eat();
         	currScore += Math.sqrt(2*currScore+1);//cuando coma la manzana enseñe el score (Alondra)
-        	//currScore++; (anthony) el score se estaba quedando en los 3.99, lo modifique para arreglarlo
+        	// (anthony) el score se estaba quedando en los 3.99, lo modifique para arreglarlo
 			}
                      
         
@@ -179,7 +191,8 @@ public class Player {
             	
             	g.setFont(new Font("Comic Sans MS", Font.BOLD , 20)); //(Anthony) cambie el font
             	g.setColor(Color.WHITE); //color del texto (Alondra)
-            	g.drawString("Score: "+(int)currScore,20, 20); //proyecta el score en el juego (Alondra)  
+            	//(anthony) cambie el formato del score para que solo presente 2 numeros despues del punto
+            	g.drawString("Score: "+new DecimalFormat("##.##").format(currScore),20, 20); //proyecta el score en el juego (Alondra)  
             	g.drawString("Length: "+length, 645, 20); //(anthony) demuestra el length de la serpiente
             	
             	g.setColor(Color.GREEN); // (Anthony) cambie el color del snake de .WHITE a .GREEN
@@ -200,10 +213,8 @@ public class Player {
                 //handler.getWorld().appleLocation;
             }
         }
-
-
     }
-    static Boolean ifRunning = false; // (anthony) boolean para verificar que Eat() se esta ejecutando
+    
     public void Eat(){
     	speedManager -= 1; // (Anthony). el ultimo digito de mi numero de estudiante es 4, por lo que se supone que
     					   // aumentara la velocidad en un factor de 5 unidades; sin embargo, sumarle dicha cantidad
@@ -216,7 +227,7 @@ public class Player {
     	 *  sonidos en los casos cuando la serpiente coma
     	 */
     	try { 
-    		ifRunning = true;
+    		justAte = true;
     		switch (direction) {
 			case "Left":
 	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX4.wav");		
