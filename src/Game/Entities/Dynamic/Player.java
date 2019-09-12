@@ -224,6 +224,7 @@ public class Player {
             }
         }
     }
+
     public void EatRottenApple() {
     	handler.getWorld().body.removeLast();
     	speedRegulator += 0.75;
@@ -233,6 +234,7 @@ public class Player {
         handler.getWorld().appleOnBoard=false;
     }
 
+
 		//default:
 			//currScore=- Math.sqrt(2*currScore+1);
 			//handler.getWorld().body.remove((new Tail(xCoord, yCoord, handler)));
@@ -241,6 +243,7 @@ public class Player {
 		//}
 
 	//public void Eat(){
+
 		//switch (Apple.isGood(handler.getWorld().appleLocation[xCoord][yCoord])) {
 		//case true:
 			//continue;
@@ -252,7 +255,8 @@ public class Player {
 			//length--;
 			//break;
 		//}
-    
+
+
     public void Eat(){
     	speedRegulator -= 0.75; // (Anthony). el ultimo digito de mi numero de estudiante es 4, por lo que se supone que
     					   		// aumentara la velocidad en un factor de 5 unidades; sin embargo, sumarle dicha cantidad
