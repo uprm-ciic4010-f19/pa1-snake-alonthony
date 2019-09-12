@@ -180,7 +180,7 @@ public class Player {
             	g.setFont(new Font("Comic Sans MS", Font.BOLD , 20)); //(Anthony) cambie el font
             	g.setColor(Color.WHITE); //color del texto (Alondra)
             	g.drawString("Score: "+(int)currScore,20, 20); //proyecta el score en el juego (Alondra)  
-            	g.drawString("Length: "+length, 670, 20); //(anthony) demuestra el length de la serpiente
+            	g.drawString("Length: "+length, 645, 20); //(anthony) demuestra el length de la serpiente
             	
             	g.setColor(Color.GREEN); // (Anthony) cambie el color del snake de .WHITE a .GREEN
                 if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){
@@ -219,16 +219,16 @@ public class Player {
     		ifRunning = true;
     		switch (direction) {
 			case "Left":
-	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX1.wav");		
+	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX4.wav");		
 				break;
 			case "Right":
 	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX3.wav");		
 				break;
 			case "Up":
-	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX2.wav");		
+	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX1.wav");		
 				break;
 			case "Down":
-	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX4.wav");		
+	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX2.wav");		
 				break;
 			default:
 				break;
