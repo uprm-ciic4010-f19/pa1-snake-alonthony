@@ -92,7 +92,7 @@ public class Player {
         	
         }if (length > 1 && currScore > 0) {
         	if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_Y)) {
-        		handler.getWorld().body.remove();
+        		handler.getWorld().body.removeLast();
         		length--;
     			currScore -= Math.sqrt(2*currScore+1);
         		if (currScore <= 0) {
