@@ -117,8 +117,8 @@ public class Player {
         switch (direction){
         	case "Left":
         		if(xCoord==0){
-        			xCoord = handler.getWorld().GridWidthHeightPixelCount-1;
-        			handler.getGame().getMusicManager().playMusic("/music/teleportFX4.wav");
+        			xCoord = handler.getWorld().GridWidthHeightPixelCount-1; //(anthony) implemented teleporting
+        			handler.getGame().getMusicManager().playMusic("/music/teleportFX4.wav");// added SFX
                 }else{
         			xCoord--;
                 }
@@ -212,11 +212,11 @@ public class Player {
 
 
     }
-<<<<<<< HEAD
+
 
    
 
-	public void Eat(){
+	//public void Eat(){
 		//switch (Apple.isGood(handler.getWorld().appleLocation[xCoord][yCoord])) {
 		//case true:
 			//continue;
@@ -228,14 +228,11 @@ public class Player {
 			//length--;
 			//break;
 		//}
-=======
-    static Boolean ifRunning = false; // (anthony) boolean para verificar que Eat() se esta ejecutando
+    
     public void Eat(){
->>>>>>> branch 'master' of https://github.com/uprm-ciic4010-f19/pa1-snake-alonthony.git
     	speedManager -= 1; // (anthony) add speed when the snake eats
-    	//moveCounter = moveCounter + 5;
-    	try { // (anthony) en el siguiente try / except implemento sonidos para cuando la serpiente coma
-    		ifRunning = true;
+    	    	try { // (anthony) en el siguiente try / except implemento sonidos para cuando la serpiente coma
+    		justAte = true;
     		switch (direction) {
 			case "Left":
 	    		handler.getGame().getMusicManager()	.playMusic("/music/eatFX1.wav");		

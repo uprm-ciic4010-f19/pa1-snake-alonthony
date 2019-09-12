@@ -10,10 +10,11 @@ public class Apple {
     public int xCoord;
     public int yCoord;
     public int goodcounter=0;
-    
+    public int goodSpeed = 0;
        // public void tick() {
         //	    goodcounter += 1;
-          //   if(goodcounter >= 10) { // (Anthony) agregue variable para iterar la velocidad
+          //   if(goodcounter >= goodSpeed) { // (Anthony) agregue variable para iterar la velocidad
+    	   //  	checkCollisionAndMove():
             //     goodcounter = 0;  
               //   changeColor(Color.BLACK);
         	//}
