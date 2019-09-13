@@ -20,7 +20,7 @@ public class Apple {
     
         public void tick() {
         	    goodcounter += 1;
-             if(goodcounter >= 10) { // (Anthony) agregue variable para iterar la velocidad
+             if(goodcounter >= 25) { // (Anthony) agregue variable para iterar la velocidad
                  goodcounter = 0;
                  this.good=false;
                  

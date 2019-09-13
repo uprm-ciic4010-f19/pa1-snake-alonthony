@@ -189,7 +189,8 @@ public class Player {
             	g.drawString("Length: "+length, 645, 20); //(anthony) demuestra el length de la serpiente
             	
             	g.setColor(Color.GREEN); // (Anthony) cambie el color del snake de .WHITE a .GREEN
-                if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){     	
+                
+            	if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){     	
                     g.fillRect((i*handler.getWorld().GridPixelsize),
                             (j*handler.getWorld().GridPixelsize),
                             handler.getWorld().GridPixelsize,
@@ -197,22 +198,25 @@ public class Player {
                     }
                 
                 g.setColor(Color.WHITE); //cambiar el color de la manzana (Alondra)
+            	
                 if(handler.getWorld().appleLocation[i][j]){ 
-                	
                 	if (length > 1 && currScore > 0) {
+                		
                     	if(handler.getWorld().getApple().isGood()) {
-                    		g.setColor(Color.BLACK);
+                    		g.setColor(Color.WHITE);
                         	currScore+= Math.sqrt(2 * currScore + 1);
                     		speedRegulator += 1;
                     		
                     	}else{
-                    			currScore -= Math.sqrt(2*currScore+1);
-                    			length--;
-                    			handler.getWorld().body.removeLast();
-                    			
-                    			//if (currScore <= 0) {
-                    			//currScore = 0;
-                    		//}
+                    		g.setColor(Color.BLACK);
+                    	
+                    			currScore -= Math.sqrt(2*currScore+1);                    			                    			
+								length--;
+                    			//handler.getWorld().body.removeLast();
+								
+                    			if (currScore <= 0) {
+                    			currScore = 0;
+                    		}
                     	}
                     }
                 	
