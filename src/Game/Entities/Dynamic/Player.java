@@ -93,12 +93,11 @@ public class Player {
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
         	length++;
         	
-        	        
-        //(anthony) Debugging key "Y" para probar las funciones de lo que pasaria si comes un rotten apple
-        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Y)) {
-    //    	handler.getWorld().body.removeLast();
-        	
-        	
+        }if (currScore >= 0 && length > 1) {  //(anthony) remover un tail piece cuando se presione "Y"
+        	if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Y)) {
+        		length--;
+        		handler.getWorld().body.removeLast();
+        	}
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego (Alondra)
         	Game.GameStates.State.setState(handler.getGame().pauseState);
                	
@@ -202,9 +201,6 @@ public class Player {
                 
                 
                 if(handler.getWorld().appleLocation[i][j]){ 
-                	
-                	
-                	
                     	if(handler.getWorld().getApple().isGood()) {
                     		g.setColor(Color.WHITE); //cambiar el color de la manzana (Alondra)
                         	                    		                    		
@@ -222,14 +218,12 @@ public class Player {
         }
     }     
 
-    public void Eat(){
-    	    					   		 	   	
+    public void Eat(){	    					   		 	   	
     	/*
     	 * (anthony) en el siguiente try / finally implemente
-    	 *  sonidos en los casos cuando la serpiente coma una manzana buena
+    	 *  sound FX cuando la serpiente coma una manzana buena
     	 *  y otros sonidos cuando sea una manzana mala
-    	 */
-    	    	
+    	 */	    	
     	try { 
     		justAte = true;
     		switch (direction) {
@@ -237,28 +231,28 @@ public class Player {
     			if (handler.getWorld().getApple().isGood()) {
     				handler.getGame().getMusicManager()	.playMusic("/music/eatFX4.wav");
     			}else {
-    				handler.getGame().getMusicManager()	.playMusic("/music/badAppleSound.wav");		
+    				handler.getGame().getMusicManager()	.playMusic("/music/badAppleSound1.wav");		
     			}
     			break;
     		case "Right":
     			if (handler.getWorld().getApple().isGood()) {
     				handler.getGame().getMusicManager()	.playMusic("/music/eatFX3.wav");	
     			} else {
-    				handler.getGame().getMusicManager()	.playMusic("/music/badAppleSound.wav");		
+    				handler.getGame().getMusicManager()	.playMusic("/music/badAppleSound2.wav");		
     			}
     			break;
     		case "Up":
     			if (handler.getWorld().getApple().isGood()) {
     				handler.getGame().getMusicManager()	.playMusic("/music/eatFX1.wav");		
     			}else {
-    				handler.getGame().getMusicManager()	.playMusic("/music/badAppleSound.wav");		
+    				handler.getGame().getMusicManager()	.playMusic("/music/badAppleSound3.wav");		
     			}
     			break;
     		case "Down":
     			if (handler.getWorld().getApple().isGood()) {
     				handler.getGame().getMusicManager()	.playMusic("/music/eatFX2.wav");	
     			}else {
-    				handler.getGame().getMusicManager()	.playMusic("/music/badAppleSound.wav");		
+    				handler.getGame().getMusicManager()	.playMusic("/music/badAppleSound4.wav");		
     			}
     			break;
     		default:
@@ -282,13 +276,14 @@ public class Player {
 				handler.getGame().getMusicManager().playMusic("/music/gameOverFX.wav");//(anthony) invoca sonido de Game Over    
 				
 			}else {
-				length--;		
-				handler.getWorld().body.removeLast();		
-				if (currScore <= 0) {							//agregue las funciones que deben suceder
+				if (currScore >= 0 && length > 1) {				//(anthony)
+					length--;									//
+					handler.getWorld().body.removeLast();		//
+				}if (currScore <= 0) {							//agregue las funciones que deben suceder
 					currScore = 0;								//cuando la serpiente se coma un
 				}else {											//bad apple
 					currScore -= Math.sqrt(2*currScore + 1);	//
-				}speedRegulator += 5;				
+				}speedRegulator += 5; // (Anthony). el ultimo digito de mi numero de estudiante es 4, por ende (4+1 = 5).				
 			}		
 		}
         
@@ -392,9 +387,11 @@ public class Player {
                 }
                 break;
         }
+        if (handler.getWorld().getApple().isGood()) {
+        	handler.getWorld().body.addLast(tail);
+        	handler.getWorld().playerLocation[tail.x][tail.y] = true;
+        	}
         
-        handler.getWorld().body.addLast(tail);
-        handler.getWorld().playerLocation[tail.x][tail.y] = true;
         steps=0;
     }
 
