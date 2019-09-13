@@ -133,8 +133,6 @@ public class GameSetUp implements Runnable {
         long now;
         long lastTime = System.nanoTime();
         long timer = 0;
-        int ticks = 0;
-
         while(running){
             //makes sure the games runs smoothly at 60 FPS
             now = System.nanoTime();
@@ -146,12 +144,10 @@ public class GameSetUp implements Runnable {
                 //re-renders and ticks the game around 60 times per second
                 tick();
                 render();
-                ticks++;
                 delta--;
             }
 
             if(timer >= 1000000000){
-                ticks = 0;
                 timer = 0;
             }
         }

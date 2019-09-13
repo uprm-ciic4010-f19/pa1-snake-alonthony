@@ -12,8 +12,8 @@ public class Apple {
     public int steps=0;
     
 	public boolean isGood(){
-		if (Game.Entities.Dynamic.Player.steps >= 110) { //(anthony) modifique el timer porque le
-			return false;								 // hice cambios a la velocidad de la serpiente
+		if (Game.Entities.Dynamic.Player.steps >= 110) { //metodo que determina cuantos pasos puedes coger antes 
+			return false;								 //que la manzana se pudra (Alondra)
 		} else {
 			return true;
 		}

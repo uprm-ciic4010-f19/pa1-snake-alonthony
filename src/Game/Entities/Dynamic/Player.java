@@ -7,7 +7,6 @@ import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.util.Random;
 
-import Game.Entities.Static.Apple;
 import Main.Handler;
 
 
@@ -37,7 +36,7 @@ public class Player {
         xCoord = 0; 
         yCoord = 0; 
         moveCounter = 0; 
-        steps=0;
+        steps=0; //(Alondra) variable contar cuantos pasos el snake tomo
         speedRegulator = 6; 
         direction= "Right";
         justAte = false;
@@ -92,12 +91,7 @@ public class Player {
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) { //cuando presiones N te agrega un segmento de la cola (Alondra)
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
         	length++;
-        	
-        }if (currScore >= 0 && length > 1) {  //(anthony) remover un tail piece cuando se presione "Y"
-        	if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Y)) {
-        		length--;
-        		handler.getWorld().body.removeLast();
-        	}
+       
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego (Alondra)
         	Game.GameStates.State.setState(handler.getGame().pauseState);
                	
@@ -166,7 +160,7 @@ public class Player {
             // El "cuello" es donde la cabeza de la serpiente solia estar
             
    
-            for (int i = 0; i < handler.getWorld().body.size() ; i++) { //manda el mensaje "Game Over" cuando se choca con el mismo
+            for (int i = 0; i < handler.getWorld().body.size() ; i++) { //si las coordenadas de la cabeza son las mismas que la cola (Alondra)
     			if (xCoord==handler.getWorld().body.get(i).x && yCoord==handler.getWorld().body.get(i).y){
     				if (i != handler.getWorld().body.size() -1) {
     					Game.GameStates.State.setState(handler.getGame().gameoverState); //llamando al state game over para cuando 
@@ -202,10 +196,10 @@ public class Player {
                 
                 if(handler.getWorld().appleLocation[i][j]){ 
                     	if(handler.getWorld().getApple().isGood()) {
-                    		g.setColor(Color.WHITE); //cambiar el color de la manzana (Alondra)
+                    		g.setColor(Color.RED); //good apple (Alondra)
                         	                    		                    		
                     	}else{
-                    		g.setColor(Color.BLACK);
+                    		g.setColor(Color.BLACK);//bad apple
       		                  		
                     	}
                     	g.fillRect((i*handler.getWorld().GridPixelsize),
@@ -271,8 +265,8 @@ public class Player {
 
 		}else {
 			
-			if (length<2) {
-				Game.GameStates.State.setState(handler.getGame().gameoverState);
+			if (length<2) { //el length del snake empieza en 1 (Alondra)
+				Game.GameStates.State.setState(handler.getGame().gameoverState); //(Alondra)
 				handler.getGame().getMusicManager().playMusic("/music/gameOverFX.wav");//(anthony) invoca sonido de Game Over    
 				
 			}else {
@@ -283,7 +277,7 @@ public class Player {
 					currScore = 0;								//cuando la serpiente se coma un
 				}else {											//bad apple
 					currScore -= Math.sqrt(2*currScore + 1);	//
-				}speedRegulator += 5; // (Anthony). el ultimo digito de mi numero de estudiante es 4, por ende (4+1 = 5).				
+				}speedRegulator += 5; 			
 			}		
 		}
         
@@ -387,12 +381,12 @@ public class Player {
                 }
                 break;
         }
-        if (handler.getWorld().getApple().isGood()) {
+        if (handler.getWorld().getApple().isGood()) {//asegurarse que cuando apple "is bad" elimine un segment
         	handler.getWorld().body.addLast(tail);
         	handler.getWorld().playerLocation[tail.x][tail.y] = true;
         	}
         
-        steps=0;
+        steps=0;//steps reinicia despues que coma el bad apple (Alondra)
     }
 
     public void kill(){

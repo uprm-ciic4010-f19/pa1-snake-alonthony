@@ -30,10 +30,11 @@ public abstract class WorldBase {
 
     public Boolean appleOnBoard;
     protected Apple apple;
-    public Apple getApple() {
-		return apple;
-    	
-    }
+    
+    public Apple getApple() { //create getter for apple class (Alondra)
+		return apple;  		 //
+    }						//
+    
     public Boolean[][] appleLocation;
 
 
