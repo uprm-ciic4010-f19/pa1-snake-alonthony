@@ -14,36 +14,24 @@ public class Apple {
 
 	public int xCoord;
     public int yCoord;
-    public int goodcounter=0;
-    public Color color;
-    public boolean good;
+    public int steps=0;
     
-        public void tick() {
-        	    goodcounter += 1;
-             if(goodcounter >= 25) { // (Anthony) agregue variable para iterar la velocidad
-                 goodcounter = 0;
-                 this.good=false;
-                 
-        	}
-           
-        }
+    
+    
+    
         
-   
-  
-
-	//
     
 	public boolean isGood(){
-		return this.good;
+		if (Game.Entities.Dynamic.Player.steps >= 80) {
+			return false;
+		} else {
+			return true;
+		}
     }
     
     
     
-    public void setGood(boolean good) {
-		this.good = good;
-	}
-
-
+    
 
 
 	public Apple(Handler handler,int x, int y){
@@ -53,17 +41,7 @@ public class Apple {
     }
     
 
-    public Color getColor() {
-		return color;
-	}
-
-	public void setColor(Color color) {
-		this.color = color;
-	}
-
-
-	
-
+  
 
 	
 

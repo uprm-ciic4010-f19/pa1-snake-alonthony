@@ -26,6 +26,7 @@ public class Player {
 
     public int moveCounter; 
     public double speedRegulator; //(anthony) variable para modificar la velocidad
+    public static int steps;
     
     public String direction;//is your first name one?
 	private double currScore; 
@@ -36,6 +37,7 @@ public class Player {
         xCoord = 0; 
         yCoord = 0; 
         moveCounter = 0; 
+        steps=0;
         speedRegulator = 6; 
         direction= "Right";
         justAte = false;
@@ -46,6 +48,7 @@ public class Player {
 	public void tick(){
 		moveCounter += 1;
 		if(moveCounter >= speedRegulator) { // (Anthony) agregue variable para iterar la velocidad
+			steps++;
 			checkCollisionAndMove();
 			moveCounter = 0; 
              
@@ -151,8 +154,20 @@ public class Player {
         handler.getWorld().playerLocation[xCoord][yCoord]=true;
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
         	Eat();
-        	currScore += Math.sqrt(2*currScore+1);//cuando coma la manzana enseñe el score (Alondra)
-        	// (anthony) el score se estaba quedando en los 3.99, lo modifique para arreglarlo
+        	if (handler.getWorld().getApple().isGood()) {
+        		currScore += Math.sqrt(2*currScore+1);
+			}else {
+				
+				if (currScore <= 0) {
+        			currScore = 0;
+        		}else {
+					currScore -= Math.sqrt(2*currScore+1);
+					
+				}
+        		
+			}
+        	
+        	
 			}
                      
         
@@ -160,6 +175,8 @@ public class Player {
             handler.getWorld().playerLocation[handler.getWorld().body.getLast().x][handler.getWorld().body.getLast().y] = false;
             handler.getWorld().body.removeLast();
             handler.getWorld().body.addFirst(new Tail(x, y,handler));
+           
+			
             // basicamente, coge la ultima parte del snake (tail) y la mueve al "cuello" (1 antes del head) cuando
             //  se mueve, simulando o dando la ilusion de que el snake se esta "moviendo"
             // El "cuello" es donde la cabeza de la serpiente solia estar
@@ -171,9 +188,10 @@ public class Player {
     																					//choque diga "Game over (Alondra)
     					handler.getGame().getMusicManager().playMusic("/music/gameOverFX.wav");//(anthony) invoca sonido de Game Over    
 
-    				}
+    				
     			}
             }
+        }
         }
     }
 
@@ -189,66 +207,55 @@ public class Player {
             	g.drawString("Length: "+length, 645, 20); //(anthony) demuestra el length de la serpiente
             	
             	g.setColor(Color.GREEN); // (Anthony) cambie el color del snake de .WHITE a .GREEN
-                
-            	if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){     	
+                if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){     	
                     g.fillRect((i*handler.getWorld().GridPixelsize),
                             (j*handler.getWorld().GridPixelsize),
                             handler.getWorld().GridPixelsize,
                             handler.getWorld().GridPixelsize);              
                     }
                 
-                g.setColor(Color.WHITE); //cambiar el color de la manzana (Alondra)
-            	
+                
                 if(handler.getWorld().appleLocation[i][j]){ 
-                	if (length > 1 && currScore > 0) {
-                		
+                	
+                	
+                	
                     	if(handler.getWorld().getApple().isGood()) {
-                    		g.setColor(Color.WHITE);
-                        	currScore+= Math.sqrt(2 * currScore + 1);
-                    		speedRegulator += 1;
-                    		
+                    		g.setColor(Color.WHITE); //cambiar el color de la manzana (Alondra)
+                        	                    		                    		
                     	}else{
                     		g.setColor(Color.BLACK);
-                    	
-                    			currScore -= Math.sqrt(2*currScore+1);                    			                    			
-								length--;
-                    			//handler.getWorld().body.removeLast();
+                    			                  			                    			
 								
-                    			if (currScore <= 0) {
-                    			currScore = 0;
-                    		}
+                    			
+								
+                    			
+                    		
                     	}
-                    }
-                	
-                    g.fillRect((i*handler.getWorld().GridPixelsize),
+                    	g.fillRect((i*handler.getWorld().GridPixelsize),
                     		(j*handler.getWorld().GridPixelsize),
                             handler.getWorld().GridPixelsize,
                             handler.getWorld().GridPixelsize);
+                    }
+                	
+                    
                     
                     
                 }
 
             }
         }
-    }
+    
 
-    public void EatRottenApple() {
-    	handler.getWorld().body.removeLast();
-    	speedRegulator += 0.75;
-    	length --;
-    //	handler.getWorld().playerLocation[handler.getWorld().body.isEmpty()][]
-        handler.getWorld().appleLocation[xCoord][yCoord]=false;
-        handler.getWorld().appleOnBoard=false;
-    }
-
+    
 
     public void Eat(){
+    	
     	speedRegulator -= 0.75; // (Anthony). el ultimo digito de mi numero de estudiante es 4, por lo que se supone que
     					   		// aumentara la velocidad en un factor de 5 unidades; sin embargo, sumarle dicha cantidad
     							// hace ineficiente la funcion de aumentar la velocidad cuando la serpiente come. cabe
     							// destacar que tenemos el consentimiento del asistente de catedra Andres Chamorro para
     							// dejar los valores como se encuentran presentes.
-    	
+    	   	
     	/*
     	 * (anthony) en el siguiente try / except implemente
     	 *  sonidos en los casos cuando la serpiente coma
@@ -275,7 +282,21 @@ public class Player {
     		}
     	} finally {
     	}
-        length++;
+    	if (handler.getWorld().getApple().isGood()) {
+			length++;
+		}else {
+			
+			if (length<2) {
+				Game.GameStates.State.setState(handler.getGame().gameoverState);
+				
+			}else {
+				length--;
+				handler.getWorld().body.removeLast();
+			}
+			
+			
+		}
+        
         Tail tail= null;
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
         handler.getWorld().appleOnBoard=false;
@@ -376,8 +397,10 @@ public class Player {
                 }
                 break;
         }
+        
         handler.getWorld().body.addLast(tail);
-        handler.getWorld().playerLocation[tail.x][tail.y] = true; 
+        handler.getWorld().playerLocation[tail.x][tail.y] = true;
+        steps=0;
     }
 
     public void kill(){
