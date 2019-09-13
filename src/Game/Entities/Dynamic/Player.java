@@ -94,10 +94,12 @@ public class Player {
         	length++;
         	
         	        
-        //Debugging key "Y" para probar las funciones de lo que pasaria si comes un rotten apple
-        }
-        
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego (Alondra)
+        //(anthony) Debugging key "Y" para probar las funciones de lo que pasaria si comes un rotten apple
+        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Y)) {
+    //    	handler.getWorld().body.removeLast();
+        	
+        	
+        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { //cuando presione ESC se pausa el juego (Alondra)
         	Game.GameStates.State.setState(handler.getGame().pauseState);
                	
 	   /**
@@ -153,33 +155,17 @@ public class Player {
         }
         handler.getWorld().playerLocation[xCoord][yCoord]=true;
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
-        	Eat();
-        	if (handler.getWorld().getApple().isGood()) {
-        		currScore += Math.sqrt(2*currScore+1);
-			}else {
-				
-				if (currScore <= 0) {
-        			currScore = 0;
-        		}else {
-					currScore -= Math.sqrt(2*currScore+1);
-					
-				}
-        		
+        	Eat();     		
 			}
-        	
-        	
-			}
-                     
-        
+        	    
         if(!handler.getWorld().body.isEmpty()) {
             handler.getWorld().playerLocation[handler.getWorld().body.getLast().x][handler.getWorld().body.getLast().y] = false;
             handler.getWorld().body.removeLast();
-            handler.getWorld().body.addFirst(new Tail(x, y,handler));
-           
-			
+            handler.getWorld().body.addFirst(new Tail(x, y,handler));	
             // basicamente, coge la ultima parte del snake (tail) y la mueve al "cuello" (1 antes del head) cuando
             //  se mueve, simulando o dando la ilusion de que el snake se esta "moviendo"
             // El "cuello" es donde la cabeza de la serpiente solia estar
+            
    
             for (int i = 0; i < handler.getWorld().body.size() ; i++) { //manda el mensaje "Game Over" cuando se choca con el mismo
     			if (xCoord==handler.getWorld().body.get(i).x && yCoord==handler.getWorld().body.get(i).y){
@@ -224,77 +210,86 @@ public class Player {
                         	                    		                    		
                     	}else{
                     		g.setColor(Color.BLACK);
-                    			                  			                    			
-								
-                    			
-								
-                    			
-                    		
+      		                  		
                     	}
                     	g.fillRect((i*handler.getWorld().GridPixelsize),
                     		(j*handler.getWorld().GridPixelsize),
                             handler.getWorld().GridPixelsize,
                             handler.getWorld().GridPixelsize);
-                    }
-                	
-                    
-                    
-                    
-                }
-
+                }                	              
             }
-        }
-    
 
-    
+        }
+    }     
 
     public void Eat(){
-    	
-    	speedRegulator -= 0.75; // (Anthony). el ultimo digito de mi numero de estudiante es 4, por lo que se supone que
-    					   		// aumentara la velocidad en un factor de 5 unidades; sin embargo, sumarle dicha cantidad
-    							// hace ineficiente la funcion de aumentar la velocidad cuando la serpiente come. cabe
-    							// destacar que tenemos el consentimiento del asistente de catedra Andres Chamorro para
-    							// dejar los valores como se encuentran presentes.
-    	   	
+    	    					   		 	   	
     	/*
-    	 * (anthony) en el siguiente try / except implemente
-    	 *  sonidos en los casos cuando la serpiente coma
+    	 * (anthony) en el siguiente try / finally implemente
+    	 *  sonidos en los casos cuando la serpiente coma una manzana buena
+    	 *  y otros sonidos cuando sea una manzana mala
     	 */
-    	
     	    	
     	try { 
     		justAte = true;
     		switch (direction) {
     		case "Left":
-    			handler.getGame().getMusicManager()	.playMusic("/music/eatFX4.wav");		
+    			if (handler.getWorld().getApple().isGood()) {
+    				handler.getGame().getMusicManager()	.playMusic("/music/eatFX4.wav");
+    			}else {
+    				handler.getGame().getMusicManager()	.playMusic("/music/badAppleSound.wav");		
+    			}
     			break;
     		case "Right":
-    			handler.getGame().getMusicManager()	.playMusic("/music/eatFX3.wav");		
+    			if (handler.getWorld().getApple().isGood()) {
+    				handler.getGame().getMusicManager()	.playMusic("/music/eatFX3.wav");	
+    			} else {
+    				handler.getGame().getMusicManager()	.playMusic("/music/badAppleSound.wav");		
+    			}
     			break;
     		case "Up":
-    			handler.getGame().getMusicManager()	.playMusic("/music/eatFX1.wav");		
+    			if (handler.getWorld().getApple().isGood()) {
+    				handler.getGame().getMusicManager()	.playMusic("/music/eatFX1.wav");		
+    			}else {
+    				handler.getGame().getMusicManager()	.playMusic("/music/badAppleSound.wav");		
+    			}
     			break;
     		case "Down":
-    			handler.getGame().getMusicManager()	.playMusic("/music/eatFX2.wav");		
+    			if (handler.getWorld().getApple().isGood()) {
+    				handler.getGame().getMusicManager()	.playMusic("/music/eatFX2.wav");	
+    			}else {
+    				handler.getGame().getMusicManager()	.playMusic("/music/badAppleSound.wav");		
+    			}
     			break;
     		default:
     			break;
-    		}
-    	} finally {
+    		}		    		
+    	} 
+    	finally {
     	}
     	if (handler.getWorld().getApple().isGood()) {
 			length++;
+    		if (currScore < 0) {						//(anthony) agregue esto para evitar que el score 
+    			currScore = 0;							// deje de funcionar por los numeros negativos
+    		}else {																			
+    		currScore += Math.sqrt(2*currScore+1);
+   	    	speedRegulator -= 5;} // (Anthony). el ultimo digito de mi numero de estudiante es 4, por ende (4+1 = 5).
+
 		}else {
 			
 			if (length<2) {
 				Game.GameStates.State.setState(handler.getGame().gameoverState);
+				handler.getGame().getMusicManager().playMusic("/music/gameOverFX.wav");//(anthony) invoca sonido de Game Over    
 				
 			}else {
-				length--;
-				handler.getWorld().body.removeLast();
-			}
-			
-			
+				length--;		
+				handler.getWorld().body.removeLast();		
+				if (currScore <= 0) {							//agregue las funciones que deben suceder
+					currScore = 0;								//cuando la serpiente se coma un
+				}else {											//bad apple
+					currScore -= Math.sqrt(2*currScore + 1);	//
+				}speedRegulator += 5;				
+			}		
 		}
         
         Tail tail= null;
